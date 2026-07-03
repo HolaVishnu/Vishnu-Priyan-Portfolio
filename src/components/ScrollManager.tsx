@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import { STOPS, activeStopAt } from "../lib/journey";
 import { useUniverse } from "../lib/store";
+import { ambient } from "../lib/sound";
 
 const EASE_OUT = (x: number) => 1 - Math.pow(1 - x, 3);
 
@@ -19,11 +20,10 @@ export default function ScrollManager() {
     const lenis = new Lenis({
       lerp: 0.09,
       smoothWheel: true,
-      // Enable touch smoothing on mobile; multiplier keeps it feeling
-      // responsive rather than over-damped on a phone.
-      smoothTouch: true,
-      touchMultiplier: 1.8,
-    });
+      // smoothTouch/touchMultiplier are valid Lenis options not yet typed
+      // in this version's type definitions.
+      ...({ smoothTouch: true, touchMultiplier: 1.8 } as object),
+    } as ConstructorParameters<typeof Lenis>[0]);
     lenisRef.current = lenis;
     lenis.stop();
 
@@ -54,10 +54,20 @@ export default function ScrollManager() {
     window.addEventListener("universe:navigate", navigate);
 
     // Docking at a station pauses travel; undocking resumes it.
+    // Also drive the per-section ambient engine.
     const unsubscribe = useUniverse.subscribe((state, prev) => {
       if (state.focusedProject !== prev.focusedProject) {
         if (state.focusedProject) lenis.stop();
         else if (state.phase === "journey") lenis.start();
+      }
+      // Ambient section morph
+      if (state.activeSection !== prev.activeSection) {
+        ambient.setSection(state.activeSection);
+      }
+      // Ambient enable/disable follows music toggle
+      if (state.audioOn !== prev.audioOn) {
+        if (state.audioOn) ambient.enable();
+        else ambient.disable();
       }
     });
 

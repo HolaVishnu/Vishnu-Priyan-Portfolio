@@ -36,6 +36,13 @@ export default function Hud() {
   const dotRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLParagraphElement>(null);
   const hintMobileRef = useRef<HTMLParagraphElement>(null);
+  // SVG progress arc
+  const arcRef = useRef<SVGCircleElement>(null);
+  const arcPctRef = useRef<SVGTSpanElement>(null);
+
+  // Arc geometry
+  const ARC_R = 20;
+  const ARC_CIRC = 2 * Math.PI * ARC_R;
 
   useEffect(() => {
     // Transient subscription: telemetry writes straight to the DOM, no re-renders
@@ -50,11 +57,18 @@ export default function Hud() {
       if (velRef.current)
         velRef.current.textContent = `${Math.min(Math.abs(s.velocity) * 0.42, 99).toFixed(1)} PC/S`;
       if (dotRef.current) dotRef.current.style.top = `${s.progress * 100}%`;
+      // Progress arc
+      if (arcRef.current) {
+        const offset = ARC_CIRC * (1 - s.progress);
+        arcRef.current.style.strokeDashoffset = String(offset);
+      }
+      if (arcPctRef.current)
+        arcPctRef.current.textContent = `${Math.round(s.progress * 100)}`;
       const hintOpacity = s.progress < 0.04 ? "1" : "0";
       if (hintRef.current) hintRef.current.style.opacity = hintOpacity;
       if (hintMobileRef.current) hintMobileRef.current.style.opacity = hintOpacity;
     });
-  }, []);
+  }, [ARC_CIRC]);
 
   const toggleAudio = () => {
     useUniverse.getState().setAudioOn(!audioOn);
@@ -87,8 +101,8 @@ export default function Hud() {
             </p>
           </div>
 
-          {/* Sound — top right */}
-          <div className="absolute right-6 top-6 text-right md:right-10 md:top-8">
+          {/* Sound + Awwwards badge — top right */}
+          <div className="absolute right-6 top-6 flex flex-col items-end gap-2 text-right md:right-10 md:top-8">
             <button
               type="button"
               onClick={toggleAudio}
@@ -97,10 +111,26 @@ export default function Hud() {
               {audioOn ? "◉ SND" : "○ SND"}
             </button>
             {audioOn && nowPlaying && (
-              <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.25em] text-cyan/80">
+              <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan/80">
                 ♫ {nowPlaying}
               </p>
             )}
+            {/* Awwwards nominate badge */}
+            <a
+              href="/Vishnu-Priyan-Portfolio/nominate.html"
+              target="_blank"
+              rel="noopener"
+              className="pointer-events-auto mt-1 hidden items-center gap-1.5 md:flex"
+              style={{ textDecoration: "none" }}
+            >
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full bg-magenta"
+                style={{ boxShadow: "0 0 5px rgba(200,107,255,0.8)", animation: "pulse 2s ease-in-out infinite" }}
+              />
+              <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-magenta/75 transition-colors hover:text-magenta">
+                Awwwards Nominee
+              </span>
+            </a>
           </div>
 
           {/* Telemetry — bottom left (desktop only) */}
@@ -139,6 +169,34 @@ export default function Hud() {
           >
             Swipe ↕
           </p>
+
+          {/* Scroll progress arc — bottom right (desktop), above scroll hint */}
+          <div className="absolute bottom-[4.5rem] right-6 hidden md:block md:right-10" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r={ARC_R} fill="none" stroke="rgba(123,92,255,0.15)" strokeWidth="1.5" />
+              <circle
+                ref={arcRef}
+                cx="24" cy="24" r={ARC_R}
+                fill="none"
+                stroke="url(#arcGrad)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeDasharray={ARC_CIRC}
+                strokeDashoffset={ARC_CIRC}
+                style={{ transform: "rotate(-90deg)", transformOrigin: "24px 24px", transition: "stroke-dashoffset 0.4s ease" }}
+              />
+              <defs>
+                <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#4ff2ff" />
+                  <stop offset="100%" stopColor="#7b5cff" />
+                </linearGradient>
+              </defs>
+              <text x="24" y="26" textAnchor="middle" fill="rgba(154,166,207,0.7)" fontSize="7" fontFamily="IBM Plex Mono, monospace">
+                <tspan ref={arcPctRef}>0</tspan>
+                <tspan fontSize="5">%</tspan>
+              </text>
+            </svg>
+          </div>
 
           {/* Journey rail — right edge (desktop) */}
           <nav

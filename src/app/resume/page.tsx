@@ -4,6 +4,7 @@ import resumeData from "../../data/resume.json";
 import timelineData from "../../data/timeline.json";
 import skillsData from "../../data/skills.json";
 import PrintButton from "./PrintButton";
+import WarpEntry from "./WarpEntry";
 
 export const metadata: Metadata = {
   title: "Resume — Vishnu Priyaan Chellappa",
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
  */
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-white px-8 py-12 text-[#0b1226] md:px-16">
+    <>
+      <WarpEntry />
+      <main className="min-h-screen bg-white px-8 py-12 text-[#0b1226] md:px-16">
       <div className="mx-auto max-w-3xl">
         <div className="no-print mb-8 flex justify-end">
           <PrintButton />
@@ -114,5 +117,6 @@ export default function ResumePage() {
         </section>
       </div>
     </main>
+    </>
   );
 }

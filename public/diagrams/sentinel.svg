@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">SENTINEL — OBSERVABILITY &amp; AIOPS (CBA)</text>
+
+  <rect x="60" y="60" width="160" height="46" rx="6" class="node"/>
+  <text x="140" y="80" class="label">APPS + CLOUD</text>
+  <text x="140" y="96" class="sub">OTEL COLLECTORS</text>
+
+  <rect x="350" y="60" width="160" height="46" rx="6" class="node"/>
+  <text x="430" y="80" class="label">INFRASTRUCTURE</text>
+  <text x="430" y="96" class="sub">SOLARWINDS</text>
+
+  <rect x="640" y="60" width="160" height="46" rx="6" class="node"/>
+  <text x="720" y="80" class="label">CMDB CONTEXT</text>
+  <text x="720" y="96" class="sub">SERVICE TOPOLOGY</text>
+
+  <rect x="290" y="170" width="280" height="60" rx="6" class="core"/>
+  <text x="430" y="194" class="label">OBSERVE — PIPELINE</text>
+  <text x="430" y="214" class="sub">SLA-DRIVEN PROACTIVE MONITORS</text>
+
+  <rect x="120" y="300" width="180" height="56" rx="6" class="node"/>
+  <text x="210" y="322" class="label">PAGERDUTY</text>
+  <text x="210" y="340" class="sub">ON-CALL ESCALATION</text>
+
+  <rect x="350" y="300" width="180" height="56" rx="6" class="node"/>
+  <text x="440" y="322" class="label">INCIDENT</text>
+  <text x="440" y="340" class="sub">MTTD/MTTR −45–50%</text>
+
+  <rect x="580" y="300" width="180" height="56" rx="6" class="node"/>
+  <text x="670" y="322" class="label">RCA / PIR</text>
+  <text x="670" y="340" class="sub">REPEATS −30%</text>
+
+  <path d="M140,106 C140,150 280,160 300,176" class="flow"/>
+  <path d="M430,106 L430,170" class="flow"/>
+  <path d="M720,106 C720,150 600,160 566,176" class="flow"/>
+  <path d="M340,230 C300,260 240,270 218,300" class="flow"/>
+  <path d="M436,230 L440,300" class="flow"/>
+  <path d="M520,230 C570,260 630,270 660,300" class="flow"/>
+</svg>

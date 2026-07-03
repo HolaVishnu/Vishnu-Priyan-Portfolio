@@ -1,0 +1,130 @@
+{
+  "projects": [
+    {
+      "id": "atlas",
+      "codename": "STATION 01 // ATLAS",
+      "title": "Enterprise CMDB Governance",
+      "tagline": "One trusted configuration model across cloud, server and endpoint — Commonwealth Bank of Australia",
+      "challenge": "At bank scale, an untrusted CMDB is a risk multiplier: impact analysis guesses, change governance rubber-stamps, and audits crawl. CI data across cloud, server and endpoint estates was inconsistent, ownership was undefined, and dependency mapping existed mostly on whiteboards.",
+      "architecture": [
+        "Defined CI lifecycle standards, CI ownership models and data quality controls as enterprise policy, not team convention",
+        "Ran structured audits with reconciliation and normalization cycles across cloud, server and endpoint assets",
+        "Led ITOM Discovery integrations for automated CI population and service dependency mapping",
+        "Drove cross-team adoption of relationship mapping so impact analysis and change governance ran on real topology"
+      ],
+      "stack": ["ServiceNow CMDB", "CSDM", "ITOM Discovery", "Service Mapping", "CI Lifecycle Governance"],
+      "outcome": [
+        { "metric": "25–30%", "label": "CMDB accuracy improvement" },
+        { "metric": "3", "label": "estates governed — cloud, server, endpoint" },
+        { "metric": "AUTO", "label": "CI population via Discovery" }
+      ],
+      "lessons": "Data ownership is a political problem wearing a technical costume. The reconciliation rules take weeks; agreeing who owns server records takes months. Start the ownership conversations on day one.",
+      "diagram": "/diagrams/atlas.svg"
+    },
+    {
+      "id": "meridian",
+      "codename": "STATION 02 // MERIDIAN",
+      "title": "Flexera One Cloud Migration",
+      "tagline": "License intelligence moved from on-prem to AWS — Commonwealth Bank of Australia",
+      "challenge": "The on-prem FlexNet Manager estate was a scaling and maintenance burden, and cloud spend was outgrowing the governance built for datacenter licensing. The bank needed its license intelligence platform in the cloud without losing a single entitlement record on the way.",
+      "architecture": [
+        "Directed the Flexera One / FNMS on-prem to AWS migration end to end — platform, data and operating model",
+        "Established cloud license governance: entitlement tracking, consumption baselines and optimisation cadence",
+        "Wired inventory feeds from Tanium, SCCM and BigFix into the Flexera Data Platform normalization backbone",
+        "Extended visibility to SaaS spend through Flexera SaaS Manager"
+      ],
+      "stack": ["Flexera One", "FNMS", "Flexera SaaS Manager", "Flexera Data Platform", "AWS", "SAM"],
+      "outcome": [
+        { "metric": "25–30%", "label": "software cost optimisation" },
+        { "metric": "0", "label": "entitlement records lost in migration" },
+        { "metric": "SaaS", "label": "spend visibility via SaaS Manager" }
+      ],
+      "lessons": "A platform migration is a governance project wearing an infrastructure costume. Moving FNMS was the easy half — rebuilding the license operating model for cloud consumption was where the savings actually came from.",
+      "diagram": "/diagrams/meridian.svg"
+    },
+    {
+      "id": "sentinel",
+      "codename": "STATION 03 // SENTINEL",
+      "title": "Observability & AIOps Strategy",
+      "tagline": "From reactive monitoring to 45–50% faster recovery — Commonwealth Bank of Australia",
+      "challenge": "Monitoring was reactive: incidents were detected by users before dashboards, Sev1/Sev2 pressure was constant, and every post-incident review found the same root cause — nobody saw it coming because nothing was watching the right layer.",
+      "architecture": [
+        "Defined the cloud observability strategy on Observe Inc. with an OpenTelemetry (OTEL) collection framework",
+        "SolarWinds retained for infrastructure monitoring, unified into SLA-driven proactive alerting",
+        "Integrated PagerDuty for real-time alerting and on-call escalation paths",
+        "Closed the loop with RCA/PIR governance and CMDB-driven impact analysis from the ATLAS programme"
+      ],
+      "stack": ["Observe Inc.", "OpenTelemetry", "SolarWinds", "PagerDuty", "ServiceNow ITSM", "CMDB"],
+      "outcome": [
+        { "metric": "45–50%", "label": "MTTD / MTTR reduction" },
+        { "metric": "-30–35%", "label": "Sev1 / Sev2 incidents" },
+        { "metric": "~30%", "label": "fewer repeat incidents via RCA/PIR" }
+      ],
+      "lessons": "Observability without CMDB context is just noise with better graphs. The telemetry only became actionable when every alert could answer 'which service, whose change, what impact' — that context lives in the configuration model.",
+      "diagram": "/diagrams/sentinel.svg"
+    },
+    {
+      "id": "aegis",
+      "codename": "STATION 04 // AEGIS",
+      "title": "Endpoint Compliance at Bank Scale",
+      "tagline": "Tanium + SCCM governance for ~88% patching SLA — Commonwealth Bank of Australia",
+      "challenge": "Enterprise endpoint compliance across a bank's estate is a moving target: thousands of endpoints, two management planes, and a patching SLA that regulators actually read. Manual provisioning and patching workflows were burning engineer hours and still missing windows.",
+      "architecture": [
+        "Dual-plane endpoint governance: Tanium for real-time visibility and control, SCCM/MECM for lifecycle management",
+        "One compliance policy layer above both tools, so agents could never disagree about the target state",
+        "Automated provisioning, monitoring and patching workflows end to end",
+        "Compliance telemetry rolled into SLA dashboards and the RCA/PIR governance cycle"
+      ],
+      "stack": ["Tanium", "SCCM / MECM", "PowerShell", "ServiceNow", "Automation Workflows"],
+      "outcome": [
+        { "metric": "~88%", "label": "patching SLA adherence" },
+        { "metric": "-35–40%", "label": "manual effort via automation" },
+        { "metric": "2→1", "label": "management planes, one policy" }
+      ],
+      "lessons": "Two endpoint tools means two opinions unless the policy layer is the single source of truth. We stopped arguing about agent counts the day compliance was defined once, above both tools.",
+      "diagram": "/diagrams/aegis.svg"
+    },
+    {
+      "id": "ledger",
+      "codename": "STATION 05 // LEDGER",
+      "title": "Rapid ILMT Audit Defence",
+      "tagline": "CAD 1.4M saved for a Canadian airport — Wipro",
+      "challenge": "An IBM audit was inbound and the client had no ILMT deployment — which means full-capacity licensing on every core, at list price. Sub-capacity eligibility required ILMT evidence, and every week without it widened the exposure.",
+      "architecture": [
+        "Rapid IBM BigFix + ILMT deployment across the estate on an audit-driven timeline",
+        "Software inventory normalized and reconciled through Flexera against entitlements",
+        "Effective License Position (ELP) built and defended with CIO/CFO stakeholders",
+        "Audit-readiness governance installed so the position stayed defensible after the engagement"
+      ],
+      "stack": ["IBM BigFix", "ILMT", "Flexera", "ELP", "SAM", "ISO 19770"],
+      "outcome": [
+        { "metric": "CAD 1.4M", "label": "licensing savings delivered" },
+        { "metric": "SUB-CAP", "label": "eligibility secured before audit" },
+        { "metric": "0", "label": "audit findings against the position" }
+      ],
+      "lessons": "In licensing, speed is literally money: every unmeasured week of sub-capacity eligibility is list-price exposure. Rapid deployment beat elegant deployment, and the governance came right behind it.",
+      "diagram": "/diagrams/ledger.svg"
+    },
+    {
+      "id": "vault",
+      "codename": "STATION 06 // VAULT",
+      "title": "Multi-Cloud SAM/HAM Governance",
+      "tagline": "Flexera One across AWS, Azure and GCP for global accounts — Cognizant",
+      "challenge": "Multiple global enterprise accounts, license sprawl across three clouds, and no unified view connecting what was bought, what was deployed, and what it cost. Each account solved SAM differently, which meant none of them solved it durably.",
+      "architecture": [
+        "Implemented Flexera One, FNMS and SaaS Manager as the standard SAM/HAM stack across accounts",
+        "Governed CMDB integrations with SAP ERP, Active Directory, O365, Salesforce, Oracle and Citrix for asset-to-financial traceability",
+        "Defined the delivery playbook as Competency Charter Lead — standards, quality controls, governance frameworks",
+        "Trained and mentored 10+ engineers per account across multi-region delivery models"
+      ],
+      "stack": ["Flexera One", "FNMS", "Flexera SaaS Manager", "SAM", "HAM", "SAP", "Active Directory", "O365"],
+      "outcome": [
+        { "metric": "3", "label": "clouds under one governance model" },
+        { "metric": "$", "label": "measurable license savings per account" },
+        { "metric": "10+", "label": "engineers mentored per account" }
+      ],
+      "lessons": "Asset management succeeds on cadence, not heroics. The one-off cleanups mattered less than the weekly reclamation rhythm — and a written playbook meant every new account started at maturity, not at zero.",
+      "diagram": "/diagrams/vault.svg"
+    }
+  ]
+}

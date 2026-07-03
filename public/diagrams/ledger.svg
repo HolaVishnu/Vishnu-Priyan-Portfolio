@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">LEDGER — RAPID ILMT AUDIT DEFENCE (WIPRO · CANADIAN AIRPORT)</text>
+
+  <rect x="40" y="90" width="160" height="56" rx="6" class="node"/>
+  <text x="120" y="112" class="label">IBM BIGFIX</text>
+  <text x="120" y="130" class="sub">RAPID DEPLOYMENT</text>
+
+  <rect x="40" y="250" width="160" height="56" rx="6" class="node"/>
+  <text x="120" y="272" class="label">ENTITLEMENTS</text>
+  <text x="120" y="290" class="sub">CONTRACTS + POs</text>
+
+  <rect x="280" y="90" width="160" height="56" rx="6" class="core"/>
+  <text x="360" y="112" class="label">ILMT</text>
+  <text x="360" y="130" class="sub">SUB-CAPACITY EVIDENCE</text>
+
+  <rect x="280" y="250" width="160" height="56" rx="6" class="node"/>
+  <text x="360" y="272" class="label">FLEXERA</text>
+  <text x="360" y="290" class="sub">RECONCILIATION</text>
+
+  <rect x="510" y="160" width="170" height="76" rx="6" class="core"/>
+  <text x="595" y="192" class="label">ELP</text>
+  <text x="595" y="212" class="sub">EFFECTIVE LICENSE POSITION</text>
+
+  <rect x="710" y="90" width="130" height="56" rx="6" class="node"/>
+  <text x="775" y="112" class="label">AUDIT</text>
+  <text x="775" y="130" class="sub">0 FINDINGS</text>
+
+  <rect x="710" y="250" width="130" height="56" rx="6" class="core"/>
+  <text x="775" y="272" class="label">CAD 1.4M</text>
+  <text x="775" y="290" class="sub">SAVINGS</text>
+
+  <path d="M200,118 L280,118" class="flow"/>
+  <path d="M200,278 L280,278" class="flow"/>
+  <path d="M440,118 C480,130 490,150 510,170" class="flow"/>
+  <path d="M440,278 C480,266 490,246 510,226" class="flow"/>
+  <path d="M680,180 C700,160 700,140 718,146" class="flow"/>
+  <path d="M680,216 C700,236 700,246 718,250" class="flow"/>
+</svg>

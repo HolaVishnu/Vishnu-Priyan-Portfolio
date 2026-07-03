@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">CONCIERGE — AGENTIC AI EMPLOYEE COPILOT</text>
+
+  <rect x="30" y="80" width="130" height="46" rx="6" class="node"/>
+  <text x="95" y="108" class="label">MS TEAMS</text>
+  <rect x="30" y="160" width="130" height="46" rx="6" class="node"/>
+  <text x="95" y="188" class="label">PORTAL</text>
+
+  <rect x="230" y="112" width="150" height="60" rx="6" class="node"/>
+  <text x="305" y="136" class="label">VIRTUAL AGENT</text>
+  <text x="305" y="154" class="sub">CONVERSATION LAYER</text>
+
+  <rect x="450" y="96" width="180" height="90" rx="6" class="core"/>
+  <text x="540" y="130" class="label">NOW ASSIST</text>
+  <text x="540" y="150" class="sub">AZURE OPENAI</text>
+  <text x="540" y="168" class="sub">GROUNDED RAG + CITATIONS</text>
+
+  <rect x="230" y="300" width="120" height="46" rx="6" class="node"/>
+  <text x="290" y="328" class="label">KNOWLEDGE</text>
+  <rect x="370" y="300" width="120" height="46" rx="6" class="node"/>
+  <text x="430" y="328" class="label">CATALOG</text>
+  <rect x="510" y="300" width="120" height="46" rx="6" class="node"/>
+  <text x="570" y="328" class="label">CMDB</text>
+
+  <rect x="690" y="96" width="150" height="70" rx="6" class="core"/>
+  <text x="765" y="124" class="label">GOVERNED</text>
+  <text x="765" y="142" class="label">ACTIONS</text>
+  <text x="765" y="158" class="sub">SCOPED + HITL</text>
+
+  <rect x="690" y="240" width="150" height="52" rx="6" class="node"/>
+  <text x="765" y="262" class="label">AUDIT TRAIL</text>
+  <text x="765" y="278" class="sub">EVERY DECISION</text>
+
+  <path d="M160,103 C200,103 200,130 230,134" class="flow"/>
+  <path d="M160,183 C200,183 200,156 230,150" class="flow"/>
+  <path d="M380,142 L450,140" class="flow"/>
+  <path d="M290,300 C290,240 400,200 452,180" class="flow"/>
+  <path d="M430,300 C430,250 470,210 510,186" class="flow"/>
+  <path d="M570,300 L546,186" class="flow"/>
+  <path d="M630,132 L690,130" class="flow"/>
+  <path d="M765,166 L765,240" class="flow"/>
+</svg>

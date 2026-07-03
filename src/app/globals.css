@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  The Architect's Universe — design tokens                          */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --void: #05060f;
+  --midnight: #0c1230;
+  --nebula: #7b5cff;
+  --magenta: #c86bff;
+  --cyan: #4ff2ff;
+  --star: #f4f7ff;
+  --dim: #9aa6cf;
+  --line: rgba(123, 92, 255, 0.18);
+  --glass-hi: rgba(20, 26, 58, 0.72);
+  --glass-lo: rgba(7, 9, 24, 0.55);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-midnight: var(--midnight);
+  --color-nebula: var(--nebula);
+  --color-magenta: var(--magenta);
+  --color-cyan: var(--cyan);
+  --color-star: var(--star);
+  --color-dim: var(--dim);
+  --font-display: var(--font-syne);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-plex);
+}
+
+html {
+  background: var(--void);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(123, 92, 255, 0.35) transparent;
+}
+
+body {
+  background: var(--void);
+  color: var(--star);
+  font-family: var(--font-instrument), system-ui, sans-serif;
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--nebula);
+  color: var(--void);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 92, 255, 0.35);
+  border-radius: 3px;
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Fine pointers get the custom cursor; coarse pointers keep the native one */
+@media (pointer: fine) {
+  body[data-custom-cursor="true"],
+  body[data-custom-cursor="true"] a,
+  body[data-custom-cursor="true"] button {
+    cursor: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Recurring surfaces                                                 */
+/* ------------------------------------------------------------------ */
+
+.holo-panel {
+  position: relative;
+  background: linear-gradient(155deg, var(--glass-hi), var(--glass-lo));
+  border: 1px solid rgba(79, 242, 255, 0.14);
+  border-radius: 6px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 0 0 1px rgba(5, 6, 15, 0.4),
+    0 24px 80px rgba(3, 4, 12, 0.55),
+    inset 0 1px 0 rgba(244, 247, 255, 0.06);
+}
+
+/* Corner brackets — the telemetry-frame motif used across every panel */
+.holo-corners::before,
+.holo-corners::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.holo-corners::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1.5px solid var(--cyan);
+  border-left: 1.5px solid var(--cyan);
+}
+.holo-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1.5px solid var(--cyan);
+  border-right: 1.5px solid var(--cyan);
+}
+
+.eyebrow {
+  font-family: var(--font-plex), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--cyan) 88%, transparent);
+}
+
+.text-aurora {
+  background: linear-gradient(100deg, var(--cyan) 0%, var(--nebula) 48%, var(--magenta) 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* Terminal caret */
+@keyframes caret-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+.caret::after {
+  content: "▊";
+  margin-left: 2px;
+  color: var(--cyan);
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
+/* Slow drift used by decorative elements */
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Warp flash overlay (Konami) */
+@keyframes warp-flash {
+  0% { opacity: 0; }
+  18% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print — used by the /resume dossier route */
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #0b1226 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

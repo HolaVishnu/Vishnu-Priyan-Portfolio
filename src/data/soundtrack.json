@@ -1,0 +1,19 @@
+{
+  "credit": "Music from NoCopyrightSounds — ncs.io. Verify each track's exact attribution text on its NCS download page before publishing.",
+  "landingTrack": "symbolism",
+  "tracks": [
+    { "id": "symbolism", "title": "Symbolism", "artist": "Electro-Light", "file": "/audio/symbolism.mp3" },
+    { "id": "dreams",    "title": "Dreams",    "artist": "Lost Sky",                  "file": "/audio/dreams.mp3" },
+    { "id": "comet",     "title": "Comet",     "artist": "Keepsake & Skybreak",       "file": "/audio/comet.mp3" },
+    { "id": "sky",       "title": "Sky",       "artist": "Sensai & Masopi",           "file": "/audio/sky.mp3" },
+    { "id": "skyline",   "title": "Skyline",   "artist": "Kovan & Electro-Light",     "file": "/audio/skyline.mp3" },
+    { "id": "cloud9",    "title": "Cloud 9",   "artist": "Itro & Tobu",               "file": "/audio/cloud9.mp3" }
+  ],
+  "zones": [
+    { "from": 0,    "to": 0.38, "track": "dreams"  },
+    { "from": 0.38, "to": 0.56, "track": "comet"   },
+    { "from": 0.56, "to": 0.72, "track": "sky"     },
+    { "from": 0.72, "to": 0.88, "track": "skyline" },
+    { "from": 0.88, "to": 1.01, "track": "cloud9"  }
+  ]
+}

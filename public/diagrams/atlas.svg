@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">ATLAS — ENTERPRISE CMDB GOVERNANCE (CBA)</text>
+
+  <rect x="40" y="70" width="150" height="52" rx="6" class="node"/>
+  <text x="115" y="92" class="label">CLOUD</text>
+  <text x="115" y="108" class="sub">AWS · AZURE</text>
+
+  <rect x="40" y="170" width="150" height="52" rx="6" class="node"/>
+  <text x="115" y="192" class="label">SERVERS</text>
+  <text x="115" y="208" class="sub">DATACENTER ESTATE</text>
+
+  <rect x="40" y="270" width="150" height="52" rx="6" class="node"/>
+  <text x="115" y="292" class="label">ENDPOINTS</text>
+  <text x="115" y="308" class="sub">TANIUM · SCCM FEEDS</text>
+
+  <rect x="280" y="168" width="150" height="60" rx="6" class="node"/>
+  <text x="355" y="192" class="label">DISCOVERY</text>
+  <text x="355" y="210" class="sub">RECONCILE + NORMALIZE</text>
+
+  <rect x="510" y="140" width="180" height="116" rx="6" class="core"/>
+  <text x="600" y="188" class="label" font-size="16">CMDB</text>
+  <text x="600" y="210" class="sub">CI LIFECYCLE + OWNERSHIP</text>
+  <text x="600" y="228" class="sub">25–30% ACCURACY GAIN</text>
+
+  <rect x="700" y="60" width="140" height="52" rx="6" class="node"/>
+  <text x="770" y="82" class="label">CHANGE RISK</text>
+  <text x="770" y="98" class="sub">GOVERNANCE</text>
+
+  <rect x="700" y="308" width="140" height="52" rx="6" class="node"/>
+  <text x="770" y="330" class="label">IMPACT MAP</text>
+  <text x="770" y="346" class="sub">SERVICE DEPENDENCIES</text>
+
+  <path d="M190,96 C240,96 240,182 280,190" class="flow"/>
+  <path d="M190,196 L280,198" class="flow"/>
+  <path d="M190,296 C240,296 240,214 280,206" class="flow"/>
+  <path d="M430,198 L510,198" class="flow"/>
+  <path d="M690,160 C740,140 740,120 762,112" class="flow"/>
+  <path d="M690,236 C740,256 740,286 762,308" class="flow"/>
+</svg>

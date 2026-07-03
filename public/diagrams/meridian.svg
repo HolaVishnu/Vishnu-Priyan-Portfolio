@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .ghost { fill:#0c1230; stroke:#7e87ad; stroke-width:1.5; stroke-dasharray:5 4; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">MERIDIAN — FLEXERA ONE / FNMS CLOUD MIGRATION (CBA)</text>
+
+  <rect x="50" y="120" width="170" height="70" rx="6" class="ghost"/>
+  <text x="135" y="148" class="label">FNMS ON-PREM</text>
+  <text x="135" y="168" class="sub">DECOMMISSIONED</text>
+
+  <rect x="50" y="280" width="170" height="60" rx="6" class="node"/>
+  <text x="135" y="304" class="label">INVENTORY FEEDS</text>
+  <text x="135" y="322" class="sub">TANIUM · SCCM · BIGFIX</text>
+
+  <rect x="330" y="130" width="200" height="90" rx="6" class="core"/>
+  <text x="430" y="164" class="label">FLEXERA ONE</text>
+  <text x="430" y="184" class="sub">FNMS ON AWS</text>
+  <text x="430" y="202" class="sub">ZERO ENTITLEMENTS LOST</text>
+
+  <rect x="345" y="290" width="170" height="56" rx="6" class="node"/>
+  <text x="430" y="312" class="label">DATA PLATFORM</text>
+  <text x="430" y="330" class="sub">FDP NORMALIZATION</text>
+
+  <rect x="640" y="90" width="170" height="56" rx="6" class="node"/>
+  <text x="725" y="112" class="label">LICENSE GOV.</text>
+  <text x="725" y="130" class="sub">CLOUD CONSUMPTION</text>
+
+  <rect x="640" y="180" width="170" height="56" rx="6" class="node"/>
+  <text x="725" y="202" class="label">SAAS MANAGER</text>
+  <text x="725" y="220" class="sub">SAAS SPEND VISIBILITY</text>
+
+  <rect x="640" y="290" width="170" height="56" rx="6" class="core"/>
+  <text x="725" y="312" class="label">−25–30% COST</text>
+  <text x="725" y="330" class="sub">SOFTWARE OPTIMISATION</text>
+
+  <path d="M220,155 L330,168" class="flow"/>
+  <path d="M220,308 C270,308 290,330 345,320" class="flow"/>
+  <path d="M430,290 L430,220" class="flow"/>
+  <path d="M530,160 C580,150 600,130 640,120" class="flow"/>
+  <path d="M530,185 C580,190 600,200 640,205" class="flow"/>
+  <path d="M530,210 C590,240 610,280 640,300" class="flow"/>
+</svg>

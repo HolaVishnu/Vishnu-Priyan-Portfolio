@@ -1,0 +1,27 @@
+{
+  "name": "Vishnu Priyaan",
+  "fullName": "Vishnu Priyaan Chellappa",
+  "callsign": "VPC-11",
+  "role": "Infrastructure & ITSM Solutions Architect",
+  "headline": "Designing Enterprise Systems for Tomorrow",
+  "subroles": [
+    "Infrastructure & ITSM Solutions Architect",
+    "ServiceNow · Flexera · ITAM",
+    "Cloud & Digital Transformation"
+  ],
+  "location": "Bangalore / Mumbai, India",
+  "coordinates": "12.9716° N, 77.5946° E",
+  "email": "vishnupriyan35@hotmail.com",
+  "linkedin": "https://www.linkedin.com/in/vishnupriyan",
+  "github": "https://github.com/vpspaceman",
+  "bio": [
+    "Fifteen years architecting the platforms large enterprises run on — ServiceNow and Flexera transformations across regulated BFSI, manufacturing and global GCC environments, from Commonwealth Bank of Australia to Cognizant, Wipro, Trianz and EY.",
+    "My territory spans the full estate: ITSM, ITOM Discovery and CMDB/CSDM data governance on ServiceNow; the ITAM toolchain end to end — Flexera One, FlexNet Manager Suite, SaaS Manager and the Flexera Data Platform, backed by BigFix/ILMT, Tanium, SCCM and Snow; observability on Observe (OTEL), SolarWinds and PagerDuty; and AWS-certified cloud architecture tying it together.",
+    "The results are measured, not claimed: CAD 1.4M+ in platform cost savings, 45–50% faster detection and recovery, ~98% SLA compliance at bank scale. I believe architecture is a creative act — the best systems feel inevitable in hindsight."
+  ],
+  "principles": [
+    { "title": "Model before you build", "detail": "A platform is only as good as its data model. CSDM first, configuration second, customisation last." },
+    { "title": "Govern the estate, not the tool", "detail": "Licences, CIs and endpoints drift the moment nobody owns them. Cadence beats heroics — audits should find nothing." },
+    { "title": "Design for the operator at 3 a.m.", "detail": "Architecture is judged in incidents, not slide decks. Clarity under pressure is the real requirement." }
+  ]
+}

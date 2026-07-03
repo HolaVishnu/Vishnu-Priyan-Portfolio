@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">VAULT — MULTI-CLOUD SAM/HAM GOVERNANCE (COGNIZANT)</text>
+
+  <rect x="50" y="60" width="130" height="46" rx="6" class="node"/>
+  <text x="115" y="88" class="label">AWS</text>
+  <rect x="50" y="130" width="130" height="46" rx="6" class="node"/>
+  <text x="115" y="158" class="label">AZURE</text>
+  <rect x="50" y="200" width="130" height="46" rx="6" class="node"/>
+  <text x="115" y="228" class="label">GCP</text>
+
+  <rect x="50" y="300" width="220" height="56" rx="6" class="node"/>
+  <text x="160" y="322" class="label">ERP + IDENTITY</text>
+  <text x="160" y="340" class="sub">SAP · AD · O365 · SFDC · ORACLE</text>
+
+  <rect x="300" y="120" width="220" height="96" rx="6" class="core"/>
+  <text x="410" y="154" class="label">FLEXERA ONE + FNMS</text>
+  <text x="410" y="174" class="sub">+ SAAS MANAGER</text>
+  <text x="410" y="192" class="sub">STANDARD SAM/HAM STACK</text>
+
+  <rect x="330" y="300" width="190" height="56" rx="6" class="node"/>
+  <text x="425" y="322" class="label">CMDB</text>
+  <text x="425" y="340" class="sub">ASSET ↔ FINANCIAL LINK</text>
+
+  <rect x="610" y="90" width="200" height="56" rx="6" class="core"/>
+  <text x="710" y="112" class="label">LICENSE SAVINGS</text>
+  <text x="710" y="130" class="sub">MEASURABLE PER ACCOUNT</text>
+
+  <rect x="610" y="180" width="200" height="56" rx="6" class="node"/>
+  <text x="710" y="202" class="label">DELIVERY PLAYBOOK</text>
+  <text x="710" y="220" class="sub">COMPETENCY CHARTER</text>
+
+  <rect x="610" y="270" width="200" height="56" rx="6" class="node"/>
+  <text x="710" y="292" class="label">10+ ENGINEERS</text>
+  <text x="710" y="310" class="sub">MENTORED PER ACCOUNT</text>
+
+  <path d="M180,83 C240,90 260,120 300,135" class="flow"/>
+  <path d="M180,153 L300,165" class="flow"/>
+  <path d="M180,223 C240,215 260,195 300,185" class="flow"/>
+  <path d="M270,320 C290,320 310,325 330,326" class="flow"/>
+  <path d="M425,300 L415,216" class="flow"/>
+  <path d="M520,150 C560,140 580,125 610,118" class="flow"/>
+  <path d="M520,175 C560,180 580,195 610,203" class="flow"/>
+  <path d="M520,200 C560,230 580,270 610,290" class="flow"/>
+</svg>

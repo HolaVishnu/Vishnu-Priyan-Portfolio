@@ -1,0 +1,77 @@
+{
+  "entries": [
+    {
+      "id": "sat-01",
+      "period": "Feb 2011 — Dec 2013",
+      "role": "Analyst, Advisory | System Engineer, IMS",
+      "company": "Ernst & Young / HCL",
+      "designation": "SAT-01 // FIRST ORBIT",
+      "achievements": [
+        "Helped establish the SAM practice at EY Mumbai; led the SAM engagement for the Taj Group of Hotels",
+        "Microsoft and Adobe license compliance reviews across SMB, EPG and EUA accounts",
+        "Enterprise infrastructure support for IOCL, Welspun and EY — AD, ServiceNow, BMC Remedy, Exchange"
+      ]
+    },
+    {
+      "id": "sat-02",
+      "period": "Feb 2014 — Jul 2016",
+      "role": "Senior SAM Specialist",
+      "company": "SoftwareONE",
+      "designation": "SAT-02 // ESCAPE VELOCITY",
+      "achievements": [
+        "Led enterprise SAM engagements aligned to ISO 19770 for global clients",
+        "Built Effective License Positions and audit defence strategies — USD 200K+ in savings",
+        "Administered Snow, SCCM, O365 and Citrix platforms across global accounts"
+      ]
+    },
+    {
+      "id": "sat-03",
+      "period": "Aug 2016 — Jun 2018",
+      "role": "Technical Lead — Flexera / BigFix & CMDB",
+      "company": "Trianz",
+      "designation": "SAT-03 // DEEP FIELD",
+      "achievements": [
+        "Delivered Flexera and BigFix implementations across enterprise clients",
+        "Governed CMDB configuration — cleansing, reconciliation, deduplication, CI relationships",
+        "Built Go-To-Market offerings for the Trianz ITAM practice"
+      ]
+    },
+    {
+      "id": "sat-04",
+      "period": "Jul 2018 — Jan 2021",
+      "role": "Technical Lead — ServiceNow, ITSM & ITAM",
+      "company": "Wipro",
+      "designation": "SAT-04 // GRAVITY ASSIST",
+      "achievements": [
+        "Delivered CAD 1.4M savings for a Canadian airport through rapid BigFix–ILMT implementation",
+        "Designed integration architecture with SAP, Active Directory and O365 under ITIL governance",
+        "ELP preparation and audit readiness with CIO/CFO stakeholders; built GTM offerings for the Wipro ITAM practice"
+      ]
+    },
+    {
+      "id": "sat-05",
+      "period": "Jan 2021 — Sep 2023",
+      "role": "Infrastructure / Solution Architect",
+      "company": "Cognizant",
+      "designation": "SAT-05 // HIGH ORBIT",
+      "achievements": [
+        "Architected multi-module ServiceNow solutions — ITSM, ITOM, CMDB, SAM, HAM — for global accounts",
+        "Implemented Flexera One, FNMS and SaaS Manager across accounts, saving license cost on AWS, Azure and GCP",
+        "Competency Charter Lead: delivery standards, pre-sales solutioning, RFP/RFI; mentored 10+ engineers per account"
+      ]
+    },
+    {
+      "id": "sat-06",
+      "period": "Sep 2023 — Apr 2026",
+      "role": "Senior Software Engineer — Core Platform, Transformation Lead",
+      "company": "Commonwealth Bank of Australia",
+      "designation": "SAT-06 // CURRENT POSITION",
+      "achievements": [
+        "Governed enterprise CMDB architecture — 25–30% accuracy improvement across cloud, server and endpoint",
+        "Directed the Flexera One / FNMS on-prem → AWS migration with 25–30% software cost optimisation",
+        "Observability strategy on Observe (OTEL) + SolarWinds + PagerDuty — 45–50% MTTD/MTTR reduction",
+        "Tanium + SCCM endpoint governance at ~88% patching SLA; AI-enabled workflows with Claude and Copilot"
+      ]
+    }
+  ]
+}

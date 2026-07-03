@@ -1,0 +1,25 @@
+{
+  "summary": "Enterprise Infrastructure and ITSM Solutions Architect with 15+ years delivering Flexera and ServiceNow platform transformations across ITSM, ITOM, CMDB, CSDM, SAM and HAM in regulated BFSI, manufacturing and global GCC environments. Deep expertise in CMDB data governance, ITOM Discovery, service operating model design (ITIL v4), the full ITAM toolchain — Flexera One, FNMS, SaaS Manager, BigFix/ILMT, Tanium, SCCM, Snow — and AWS-certified cloud architecture. Track record: CAD 1.4M+ in platform cost savings, 45–50% MTTD/MTTR reduction, ~98% SLA compliance at enterprise scale.",
+  "education": {
+    "degree": "Bachelor of Engineering — Computer Science",
+    "school": "Anna University, India"
+  },
+  "industries": "BFSI (Commonwealth Bank of Australia, Barclays, Nomura, JP Morgan, Visa) · Technology Consulting (Cognizant, Wipro, Trianz, EY) · Manufacturing & Automotive (Bosch) · FMCG (Kenvue, Mattel)",
+  "certifications": [
+    { "id": "aws-saa", "name": "AWS Certified Solutions Architect – Associate", "issuer": "Amazon Web Services", "status": "Active" },
+    { "id": "itil4", "name": "ITIL v4 Foundation", "issuer": "Axelos", "status": "Active" },
+    { "id": "fnms", "name": "FlexNet Manager Suite (FNMS) Technical Certified", "issuer": "Flexera", "status": "Active" },
+    { "id": "csa", "name": "ServiceNow Certified System Administrator (CSA)", "issuer": "ServiceNow", "status": "Expired" },
+    { "id": "cis-itsm", "name": "ServiceNow CIS — ITSM", "issuer": "ServiceNow", "status": "Planned" },
+    { "id": "cis-itom", "name": "ServiceNow CIS — ITOM", "issuer": "ServiceNow", "status": "Planned" },
+    { "id": "togaf", "name": "TOGAF", "issuer": "The Open Group", "status": "Planned" }
+  ],
+  "highlights": [
+    "Delivered CAD 1.4M+ in cumulative platform cost savings across license governance, AWS migration and infrastructure optimisation",
+    "Reduced MTTD/MTTR by 45–50% through enterprise observability — Observe (OTEL) + SolarWinds — and CMDB-driven impact analysis",
+    "Improved CMDB accuracy by 25–30% across cloud, server and endpoint estates through structured audits and reconciliation",
+    "Achieved ~98% enterprise SLA compliance at CBA through Tanium + SCCM endpoint governance, cutting Sev1/Sev2 incidents 30–35%",
+    "Enabled USD 200K+ in SAM savings through proactive audit readiness at SoftwareONE and Wipro",
+    "Built Go-To-Market offerings for two ITAM practices; mentored 10+ engineers per account across multi-region delivery"
+  ]
+}

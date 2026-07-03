@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="ui-monospace, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7b5cff"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#0c1230; stroke:#7b5cff; stroke-width:1.5; }
+    .core { fill:#0c1230; stroke:#4ff2ff; stroke-width:2; }
+    .label { fill:#f4f7ff; font-size:13px; text-anchor:middle; }
+    .sub { fill:#7e87ad; font-size:10px; text-anchor:middle; letter-spacing:2px; }
+    .flow { stroke:#7b5cff; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+  </style>
+
+  <text x="430" y="30" class="sub">AEGIS — ENDPOINT COMPLIANCE AT BANK SCALE (CBA)</text>
+
+  <rect x="290" y="60" width="280" height="56" rx="6" class="core"/>
+  <text x="430" y="82" class="label">COMPLIANCE POLICY LAYER</text>
+  <text x="430" y="100" class="sub">ONE TARGET STATE, TWO PLANES</text>
+
+  <rect x="140" y="180" width="180" height="60" rx="6" class="node"/>
+  <text x="230" y="204" class="label">TANIUM</text>
+  <text x="230" y="222" class="sub">REAL-TIME VISIBILITY</text>
+
+  <rect x="540" y="180" width="180" height="60" rx="6" class="node"/>
+  <text x="630" y="204" class="label">SCCM / MECM</text>
+  <text x="630" y="222" class="sub">LIFECYCLE + PATCHING</text>
+
+  <rect x="60" y="310" width="200" height="56" rx="6" class="node"/>
+  <text x="160" y="332" class="label">AUTOMATION</text>
+  <text x="160" y="350" class="sub">PROVISION · PATCH · MONITOR</text>
+
+  <rect x="330" y="310" width="200" height="56" rx="6" class="core"/>
+  <text x="430" y="332" class="label">~88% PATCH SLA</text>
+  <text x="430" y="350" class="sub">MANUAL EFFORT −35–40%</text>
+
+  <rect x="600" y="310" width="200" height="56" rx="6" class="node"/>
+  <text x="700" y="332" class="label">SLA DASHBOARDS</text>
+  <text x="700" y="350" class="sub">RCA / PIR GOVERNANCE</text>
+
+  <path d="M340,116 C300,140 260,160 240,180" class="flow"/>
+  <path d="M520,116 C560,140 600,160 620,180" class="flow"/>
+  <path d="M210,240 C190,270 175,285 165,310" class="flow"/>
+  <path d="M280,240 C330,270 380,285 405,310" class="flow"/>
+  <path d="M600,240 C560,270 490,290 470,310" class="flow"/>
+  <path d="M655,240 C675,270 690,285 697,310" class="flow"/>
+</svg>

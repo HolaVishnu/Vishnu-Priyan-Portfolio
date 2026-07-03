@@ -24,13 +24,29 @@ export default function Scene() {
 
   return (
     <div className="fixed inset-0" aria-hidden="true">
+      {/* CSS vignette — replaces the postprocessing Vignette pass which was
+          removed to eliminate the EffectComposer blit/blank race on Chrome. */}
+      <div
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 55%, rgba(5,6,15,0.55) 78%, rgba(5,6,15,0.88) 100%)",
+        }}
+      />
       <Canvas
         camera={{ fov: 42, near: 0.1, far: 900, position: [0, 1, 96] }}
-        dpr={quality === "high" ? [1, 1.5] : 1}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
+        dpr={[1, 1.25]}
+        gl={{
+          antialias: false,
+          // preserveDrawingBuffer prevents Chrome/ANGLE from blanking the
+          // canvas between frames when the compositor is busy (e.g. during
+          // scroll or GPU context switches).
+          preserveDrawingBuffer: true,
+          // "default" avoids the high-performance GPU path that can drop
+          // context on integrated + discrete hybrid setups.
+          powerPreference: "default",
+        }}
         onCreated={({ gl }) => {
-          // If the driver drops the WebGL context under load, preventDefault
-          // lets the browser restore it instead of leaving the canvas black.
           gl.domElement.addEventListener("webglcontextlost", (e) =>
             e.preventDefault()
           );

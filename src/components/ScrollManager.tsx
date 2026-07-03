@@ -16,7 +16,14 @@ export default function ScrollManager() {
   const phase = useUniverse((s) => s.phase);
 
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    const lenis = new Lenis({
+      lerp: 0.09,
+      smoothWheel: true,
+      // Enable touch smoothing on mobile; multiplier keeps it feeling
+      // responsive rather than over-damped on a phone.
+      smoothTouch: true,
+      touchMultiplier: 1.8,
+    });
     lenisRef.current = lenis;
     lenis.stop();
 

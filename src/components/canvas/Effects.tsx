@@ -1,37 +1,15 @@
-import { useMemo } from "react";
-import * as THREE from "three";
-import {
-  EffectComposer,
-  Bloom,
-  ChromaticAberration,
-  Vignette,
-} from "@react-three/postprocessing";
-import { useUniverse } from "../../lib/store";
+// EffectComposer is intentionally absent.
+//
+// The composer renders the scene to an internal render target, then blits to
+// the main canvas framebuffer. Chrome's GPU compositor can sample the canvas
+// BETWEEN the clear and the blit — producing a strip of the raw clear colour
+// (#05060f) at the top, left, or right of the viewport during slow scroll.
+// preserveDrawingBuffer does not help because the canvas IS cleared before the
+// blit. The only reliable fix is to eliminate the intermediate buffer entirely
+// and let Three.js write directly to the canvas each frame.
+//
+// Visual compensation lives in CSS (globals.css .scene-vignette overlay).
 
-/**
- * Depth of field is deliberately absent: at these scene scales it reads as
- * an out-of-focus page, not cinema. MSAA is also off — multisampled blits
- * break compositing on some Windows/ANGLE GPUs (black or half-rendered
- * frames); bloom masks the aliasing instead.
- */
 export default function Effects() {
-  const quality = useUniverse((s) => s.quality);
-  const caOffset = useMemo(() => new THREE.Vector2(0.00035, 0.0002), []);
-
-  if (quality === "low") {
-    return (
-      <EffectComposer multisampling={0}>
-        <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.2} luminanceSmoothing={0.35} radius={0.7} />
-        <Vignette eskil={false} offset={0.22} darkness={0.8} />
-      </EffectComposer>
-    );
-  }
-
-  return (
-    <EffectComposer multisampling={0}>
-      <Bloom mipmapBlur intensity={1.15} luminanceThreshold={0.18} luminanceSmoothing={0.35} radius={0.75} />
-      <ChromaticAberration offset={caOffset} />
-      <Vignette eskil={false} offset={0.22} darkness={0.8} />
-    </EffectComposer>
-  );
+  return null;
 }

@@ -30,25 +30,29 @@ export default function Hud() {
   const nowPlaying = useUniverse((s) => s.nowPlaying);
 
   const destRef = useRef<HTMLSpanElement>(null);
+  const destMobileRef = useRef<HTMLSpanElement>(null);
   const posRef = useRef<HTMLSpanElement>(null);
   const velRef = useRef<HTMLSpanElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLParagraphElement>(null);
+  const hintMobileRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     // Transient subscription: telemetry writes straight to the DOM, no re-renders
     return useUniverse.subscribe((s) => {
       if (s.phase !== "journey") return;
       cameraStateAt(s.progress, tmpPos, tmpTarget);
-      if (destRef.current)
-        destRef.current.textContent = nearestStop(s.progress).designation;
+      const dest = nearestStop(s.progress).designation;
+      if (destRef.current) destRef.current.textContent = dest;
+      if (destMobileRef.current) destMobileRef.current.textContent = dest;
       if (posRef.current)
         posRef.current.textContent = `X ${fmt(tmpPos.x)}  Y ${fmt(tmpPos.y)}  Z ${fmt(tmpPos.z)}`;
       if (velRef.current)
         velRef.current.textContent = `${Math.min(Math.abs(s.velocity) * 0.42, 99).toFixed(1)} PC/S`;
       if (dotRef.current) dotRef.current.style.top = `${s.progress * 100}%`;
-      if (hintRef.current)
-        hintRef.current.style.opacity = s.progress < 0.04 ? "1" : "0";
+      const hintOpacity = s.progress < 0.04 ? "1" : "0";
+      if (hintRef.current) hintRef.current.style.opacity = hintOpacity;
+      if (hintMobileRef.current) hintMobileRef.current.style.opacity = hintOpacity;
     });
   }, []);
 
@@ -99,8 +103,8 @@ export default function Hud() {
             )}
           </div>
 
-          {/* Telemetry — bottom left */}
-          <div className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.25em] md:bottom-8 md:left-10">
+          {/* Telemetry — bottom left (desktop only) */}
+          <div className="absolute bottom-6 left-6 hidden font-mono text-[10px] uppercase tracking-[0.25em] md:block md:bottom-8 md:left-10">
             <p className="text-dim">
               DEST <span ref={destRef} className="ml-2 text-cyan/90" />
             </p>
@@ -112,15 +116,31 @@ export default function Hud() {
             </p>
           </div>
 
-          {/* Scroll hint — bottom right */}
+          {/* DEST only — mobile bottom left */}
+          <div className="absolute bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] left-4 font-mono text-[9px] uppercase tracking-[0.25em] md:hidden">
+            <p className="text-dim">
+              <span ref={destMobileRef} className="text-cyan/80" />
+            </p>
+          </div>
+
+          {/* Scroll hint — desktop only */}
           <p
             ref={hintRef}
-            className="absolute bottom-8 right-6 font-mono text-[10px] uppercase tracking-[0.35em] text-dim transition-opacity duration-700 md:right-24"
+            className="absolute bottom-8 right-6 hidden font-mono text-[10px] uppercase tracking-[0.35em] text-dim transition-opacity duration-700 md:block md:right-24"
           >
             Scroll to travel ↓
           </p>
 
-          {/* Journey rail — right edge */}
+          {/* Swipe hint — mobile only */}
+          <p
+            ref={hintMobileRef}
+            className="absolute right-4 font-mono text-[9px] uppercase tracking-[0.3em] text-dim transition-opacity duration-700 md:hidden"
+            style={{ bottom: "calc(3.75rem + env(safe-area-inset-bottom, 0px))" }}
+          >
+            Swipe ↕
+          </p>
+
+          {/* Journey rail — right edge (desktop) */}
           <nav
             aria-label="Journey stops"
             className="pointer-events-auto absolute right-6 top-1/2 hidden -translate-y-1/2 md:block md:right-10"
@@ -152,6 +172,34 @@ export default function Hud() {
                 </button>
               ))}
             </div>
+          </nav>
+
+          {/* Mobile bottom section nav — horizontal dots */}
+          <nav
+            aria-label="Journey stops"
+            className="pointer-events-auto absolute inset-x-0 flex items-center justify-center gap-4 pb-[env(safe-area-inset-bottom,0px)] md:hidden"
+            style={{ bottom: "0.5rem" }}
+          >
+            {STOPS.map((stop) => (
+              <button
+                key={stop.id}
+                type="button"
+                onClick={() => navigate(stop.t)}
+                aria-label={`Travel to ${stop.name}`}
+                className="flex flex-col items-center gap-1 p-1"
+              >
+                <span
+                  className={`block h-[6px] w-[6px] rotate-45 border transition-all duration-300 ${
+                    activeSection === stop.id
+                      ? "scale-125 border-cyan bg-cyan"
+                      : "border-nebula/50 bg-void"
+                  }`}
+                />
+                <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-dim/70">
+                  {stop.name.split(" ")[0]}
+                </span>
+              </button>
+            ))}
           </nav>
         </motion.div>
       )}

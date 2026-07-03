@@ -42,6 +42,9 @@ body {
   font-family: var(--font-instrument), system-ui, sans-serif;
   overflow-x: clip;
   min-height: 100vh;
+  /* Allow vertical touch scroll to reach Lenis; block horizontal to prevent
+     accidental swipe-back navigation on iOS/Android. */
+  touch-action: pan-y;
 }
 
 ::selection {

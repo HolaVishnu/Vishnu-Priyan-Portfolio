@@ -4,10 +4,21 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   output: "export",
-  // GitHub Pages serves the site under /Vishnu-Priyan-Portfolio
   basePath: isProd ? "/Vishnu-Priyan-Portfolio" : "",
-  // next/image optimisation requires a server; use plain <img> for static export
   images: { unoptimized: true },
+  poweredByHeader: false,
+  experimental: {
+    optimizePackageImports: [
+      "three",
+      "@react-three/fiber",
+      "@react-three/drei",
+      "framer-motion",
+      "maath",
+    ],
+  },
+  compiler: {
+    removeConsole: isProd ? { exclude: ["error", "warn"] } : false,
+  },
 };
 
 export default nextConfig;

@@ -42,7 +42,9 @@ export default function Cursor() {
       mx = e.clientX;
       my = e.clientY;
       const t = e.target as Element | null;
-      hovering = !!t?.closest("a, button, [data-cursor], [role='button']");
+      hovering =
+        !!t?.closest("a, button, [data-cursor], [role='button']") ||
+        document.body.dataset.cursorProximity === "planet";
     };
 
     const onClick = (e: MouseEvent) => {

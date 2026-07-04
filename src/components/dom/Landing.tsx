@@ -39,11 +39,7 @@ const STATUS_LABEL: Record<BootLine["status"], string> = {
 
 const STEP_MS = 260;
 
-// public/ assets sit under the GitHub Pages basePath in production but at
-// the root in dev — a hardcoded prod path 404s on localhost.
-const NOMINATE_HREF =
-  (process.env.NODE_ENV === "production" ? "/Vishnu-Priyan-Portfolio" : "") +
-  "/nominate.html";
+const NOMINATE_HREF = "/nominate.html";
 
 export default function Landing() {
   const phase = useUniverse((s) => s.phase);

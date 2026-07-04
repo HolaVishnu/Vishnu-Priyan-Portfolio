@@ -2,26 +2,60 @@
   "name": "Vishnu Priyaan",
   "fullName": "Vishnu Priyaan Chellappa",
   "callsign": "VPC-11",
-  "role": "Infrastructure & ITSM Solutions Architect",
+  "role": "Infrastructure & Enterprise Solution Architect",
   "headline": "Designing Enterprise Systems for Tomorrow",
   "subroles": [
-    "Infrastructure & ITSM Solutions Architect",
+    "Infrastructure & Enterprise Solution Architect",
     "ServiceNow · Flexera · ITAM",
     "Cloud & Digital Transformation"
   ],
   "location": "Bangalore / Mumbai, India",
   "coordinates": "12.9716° N, 77.5946° E",
   "email": "vishnupriyan35@hotmail.com",
-  "linkedin": "https://www.linkedin.com/in/vishnupriyan",
-  "github": "https://github.com/vpspaceman",
+  "linkedin": "https://www.linkedin.com/in/vishnupriyaan/",
+  "github": "https://github.com/HolaVishnu",
   "bio": [
-    "Fifteen years architecting the platforms large enterprises run on — ServiceNow and Flexera transformations across regulated BFSI, manufacturing and global GCC environments, from Commonwealth Bank of Australia to Cognizant, Wipro, Trianz and EY.",
-    "My territory spans the full estate: ITSM, ITOM Discovery and CMDB/CSDM data governance on ServiceNow; the ITAM toolchain end to end — Flexera One, FlexNet Manager Suite, SaaS Manager and the Flexera Data Platform, backed by BigFix/ILMT, Tanium, SCCM and Snow; observability on Observe (OTEL), SolarWinds and PagerDuty; and AWS-certified cloud architecture tying it together.",
-    "The results are measured, not claimed: CAD 1.4M+ in platform cost savings, 45–50% faster detection and recovery, ~98% SLA compliance at bank scale. I believe architecture is a creative act — the best systems feel inevitable in hindsight."
+    "For more than 15 years, I've designed and delivered enterprise technology platforms that power global organizations across banking, financial services, manufacturing, retail, and Global Capability Centers (GCCs). My work bridges infrastructure, cloud, IT operations, IT service management, and IT asset management—transforming complex technology landscapes into scalable, secure, and intelligent ecosystems.",
+    "As an Infrastructure & Enterprise Solution Architect, I specialize in designing end-to-end enterprise architectures that integrate business strategy with modern technology platforms. My expertise spans ServiceNow, Flexera, cloud infrastructure, observability, automation, and enterprise integrations, enabling organizations to modernize operations while improving governance, operational resilience, and user experience.",
+    "Throughout my career, I've led architecture initiatives for global organizations including Commonwealth Bank of Australia, EY, Cognizant, Wipro, Trianz, and other enterprise customers, delivering technology solutions that scale across thousands of servers, applications, users, and business services."
+  ],
+  "expertiseTitle": "My core architecture expertise includes:",
+  "expertise": [
+    "Enterprise & Infrastructure Architecture",
+    "ServiceNow Architecture (ITSM, ITOM, Discovery, CMDB, CSDM, Service Mapping, Event Management, IntegrationHub, Flow Designer)",
+    "IT Asset Management & Software Asset Management (Flexera One, FlexNet Manager Suite, Flexera Data Platform, SaaS Manager)",
+    "Endpoint & Discovery Technologies (Tanium, BigFix, IBM ILMT, Microsoft SCCM, Snow Software)",
+    "Cloud & Hybrid Infrastructure (AWS, Azure, VMware, Hybrid Cloud Architecture)",
+    "Observability & Operations (Observe (OpenTelemetry), SolarWinds, PagerDuty, Monitoring & Event Correlation)",
+    "Enterprise Integrations (REST APIs, Middleware, Identity Platforms, Automation Frameworks)",
+    "Governance, Risk & Compliance Architecture",
+    "AI-powered Enterprise Automation and Digital Transformation"
+  ],
+  "outcomesTitle": "The outcomes speak for themselves:",
+  "outcomes": [
+    "CAD 1.4M+ in platform cost optimization and licensing efficiencies",
+    "45–50% improvement in incident detection and recovery through modern observability",
+    "~98% SLA compliance across enterprise-scale banking environments",
+    "Enterprise CMDB and CSDM transformations supporting governance and operational excellence",
+    "Large-scale ITAM and SAM modernization initiatives improving software compliance and asset visibility",
+    "Cloud and infrastructure modernization programs focused on resilience, automation, and scalability"
   ],
   "principles": [
-    { "title": "Model before you build", "detail": "A platform is only as good as its data model. CSDM first, configuration second, customisation last." },
-    { "title": "Govern the estate, not the tool", "detail": "Licences, CIs and endpoints drift the moment nobody owns them. Cadence beats heroics — audits should find nothing." },
-    { "title": "Design for the operator at 3 a.m.", "detail": "Architecture is judged in incidents, not slide decks. Clarity under pressure is the real requirement." }
+    {
+      "title": "Model before you build",
+      "detail": "Every successful platform begins with a well-defined operating model and a trusted data foundation. Strong governance, accurate CMDBs, and CSDM alignment create systems that remain scalable long after implementation."
+    },
+    {
+      "title": "Design the ecosystem, not the product",
+      "detail": "Technology platforms should never operate in isolation. ServiceNow, Flexera, cloud infrastructure, monitoring, endpoint management, and business services must function as one connected enterprise ecosystem."
+    },
+    {
+      "title": "Simplicity is the ultimate sophistication",
+      "detail": "The best architectures reduce operational complexity while increasing reliability. Every design decision should improve maintainability, scalability, and the experience of the teams who operate the platform every day."
+    },
+    {
+      "title": "Build for resilience",
+      "detail": "Architecture proves its value during incidents, outages, audits, and rapid business change—not in presentation decks. Resilient systems prioritize observability, automation, governance, and operational excellence from day one."
+    }
   ]
 }

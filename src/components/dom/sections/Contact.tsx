@@ -14,6 +14,15 @@ const SENDING_LINES = [
   "TRANSMITTING ···",
 ];
 
+// The site ships as a static export (GitHub Pages) — there is no server to
+// receive POSTs. Web3Forms relays submissions straight to the inbox without
+// a backend. The access key is public by design and safe to commit: grab one
+// free at https://web3forms.com (email → instant key) and paste it here.
+// Until a key is set, the form falls back to opening a pre-filled mail
+// compose so no transmission is ever silently lost.
+const WEB3FORMS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+const RELAY_CONFIGURED = !WEB3FORMS_KEY.startsWith("YOUR_");
+
 export default function Contact() {
   const transmission = useUniverse((s) => s.transmission);
   const [name, setName] = useState("");
@@ -33,13 +42,27 @@ export default function Contact() {
     sound.confirm();
 
     // Fire the payload while the beam animation plays
-    fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
-    }).catch(() => {
-      /* the mailto fallback below always remains available */
-    });
+    if (RELAY_CONFIGURED) {
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          name,
+          email,
+          message,
+          subject: `Portfolio signal from ${name}`,
+          from_name: "The Architect's Universe",
+        }),
+      }).catch(() => {
+        /* the mailto link below always remains available */
+      });
+    } else {
+      // No relay key yet — open a pre-filled compose so the signal still lands
+      const subject = encodeURIComponent(`Signal from ${name} — Architect's Universe`);
+      const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
+      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+    }
 
     setTimeout(() => {
       useUniverse.getState().setTransmission("sent");

@@ -43,13 +43,22 @@ export default function Landing() {
   const phase = useUniverse((s) => s.phase);
   const audioOn = useUniverse((s) => s.audioOn);
 
+  const [showMatrix, setShowMatrix] = useState(true);
   const [visibleLines, setVisibleLines] = useState(0);
   const [progress, setProgress] = useState(0);
   const nameRef = useRef<HTMLHeadingElement>(null);
 
-  // Boot sequence: reveal one line every STEP_MS, then transition to landing
+  // Void hold — pure black silence before boot sequence
   useEffect(() => {
     if (phase !== "boot") return;
+    if (useUniverse.getState().reducedMotion) { setShowMatrix(false); return; }
+    const done = setTimeout(() => setShowMatrix(false), 1400);
+    return () => clearTimeout(done);
+  }, [phase]);
+
+  // Boot sequence: reveal one line every STEP_MS after matrix clears
+  useEffect(() => {
+    if (phase !== "boot" || showMatrix) return;
     if (useUniverse.getState().reducedMotion) {
       useUniverse.getState().setPhase("landing");
       return;
@@ -66,7 +75,7 @@ export default function Landing() {
       }
     }, STEP_MS);
     return () => clearInterval(id);
-  }, [phase]);
+  }, [phase, showMatrix]);
 
   // Name reveal animation on landing phase
   useEffect(() => {
@@ -103,71 +112,75 @@ export default function Landing() {
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-40 flex items-center justify-center"
         >
-          {/* Vignette */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background: `radial-gradient(ellipse 90% 75% at 50% 50%,
-                transparent 0%, rgba(5,6,15,0.45) 45%,
-                rgba(5,6,15,0.82) 72%, rgba(5,6,15,0.97) 100%)`,
-            }}
-          />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[45vh]"
-            style={{ background: "linear-gradient(to top, rgba(5,6,15,0.98) 0%, rgba(5,6,15,0.6) 50%, transparent 100%)" }} />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30vh]"
-            style={{ background: "linear-gradient(to bottom, rgba(5,6,15,0.92) 0%, transparent 100%)" }} />
-
-          {/* ── Boot sequence ── */}
+          {/* Solid black backdrop — covers everything during boot, fades to reveal space on landing */}
           {phase === "boot" && (
-            <div className="flex w-full max-w-lg flex-col px-8" role="status" aria-live="polite">
-              {/* Header bar */}
-              <div className="mb-5 flex items-center gap-3 border-b border-cyan/10 pb-3">
-                <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-cyan" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-cyan/70">
+            <div className="pointer-events-none absolute inset-0 bg-void" />
+          )}
+
+          {/* Vignette — only needed on landing screen */}
+          {phase === "landing" && (
+            <>
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background: `radial-gradient(ellipse 90% 75% at 50% 50%,
+                    transparent 0%, rgba(5,6,15,0.45) 45%,
+                    rgba(5,6,15,0.82) 72%, rgba(5,6,15,0.97) 100%)`,
+                }}
+              />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[45vh]"
+                style={{ background: "linear-gradient(to top, rgba(5,6,15,0.98) 0%, rgba(5,6,15,0.6) 50%, transparent 100%)" }} />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30vh]"
+                style={{ background: "linear-gradient(to bottom, rgba(5,6,15,0.92) 0%, transparent 100%)" }} />
+            </>
+          )}
+
+          {/* ── Void hold (black silence before boot) ── */}
+          {/* showMatrix is true for 1.4s — no content, just black */}
+
+          {/* ── Boot sequence on black ── */}
+          {phase === "boot" && !showMatrix && (
+            <div className="flex w-full max-w-2xl flex-col gap-7 px-6 md:px-12" role="status" aria-live="polite">
+
+              {/* Header */}
+              <div className="flex items-center gap-3 border-b border-cyan/10 pb-5">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-cyan" style={{ boxShadow: "0 0 8px #4ff2ff" }} />
+                <span className="font-mono text-[11px] uppercase tracking-[0.4em] text-cyan/70">
                   Deep Space Navigation System
                 </span>
+                <span className="ml-auto font-mono text-[9px] text-dim/30">v5.2</span>
               </div>
 
-              {/* Boot lines */}
-              <div className="space-y-[6px]">
-                {BOOT_SEQUENCE.slice(0, visibleLines).map((line, i) => (
-                  <motion.div
-                    key={line.label}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex items-center justify-between font-mono text-[10px] tracking-[0.18em]"
-                  >
-                    <span className="text-dim/70">{line.label}</span>
-                    <span className={STATUS_COLOR[line.status]}>
+              {/* Accumulating lines */}
+              <div className="flex flex-col gap-3">
+                {BOOT_SEQUENCE.slice(0, visibleLines).map((line) => (
+                  <div key={line.label} className="boot-line flex items-center justify-between">
+                    <span className="font-mono text-[11px] tracking-[0.18em] text-star/60">{line.label}</span>
+                    <span className={`font-mono text-[11px] tracking-widest ${STATUS_COLOR[line.status]}`}>
                       {STATUS_LABEL[line.status]}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
-
-                {/* Blinking caret */}
                 {visibleLines < BOOT_SEQUENCE.length && (
-                  <span className="caret font-mono text-[10px] tracking-[0.18em] text-cyan/60" />
+                  <span className="caret font-mono text-[11px] text-cyan/50" />
                 )}
               </div>
 
-              {/* Progress bar */}
-              <div className="mt-6">
-                <div className="mb-1.5 flex justify-between font-mono text-[8px] uppercase tracking-[0.3em] text-dim/40">
-                  <span>BOOT PROGRESS</span>
-                  <span>{progress}%</span>
-                </div>
-                <div className="h-[2px] w-full overflow-hidden rounded-full bg-white/5">
-                  <motion.div
-                    className="h-full rounded-full"
+              {/* Progress */}
+              <div className="flex flex-col gap-2">
+                <div className="h-px w-full bg-white/5">
+                  <div
+                    className="h-full transition-[width] duration-[220ms] ease-out"
                     style={{
+                      width: `${progress}%`,
                       background: "linear-gradient(90deg, #4ff2ff, #7b5cff)",
-                      boxShadow: "0 0 12px rgba(79,242,255,0.5)",
+                      boxShadow: "0 0 12px rgba(79,242,255,0.6)",
                     }}
-                    animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.22, ease: "easeOut" }}
                   />
+                </div>
+                <div className="flex justify-between font-mono text-[8px] uppercase tracking-[0.3em] text-white/25">
+                  <span>Initialising</span><span>{progress}%</span>
                 </div>
               </div>
             </div>

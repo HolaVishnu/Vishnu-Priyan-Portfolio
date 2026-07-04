@@ -17,7 +17,7 @@ export default function Projects() {
       designation="Planet 03 // Forge Prime"
       title="Systems shipped into orbit."
     >
-      <div className="max-h-[58vh] space-y-3 overflow-y-auto pr-1">
+      <div className="max-h-[58vh] space-y-3 overflow-y-auto pr-1" data-lenis-prevent>
         {projectsData.projects.map((project) => (
           <button
             key={project.id}

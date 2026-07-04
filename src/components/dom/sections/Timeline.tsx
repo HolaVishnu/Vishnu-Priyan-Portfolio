@@ -12,7 +12,7 @@ export default function Timeline() {
       title="Every orbit taught me something."
       side="right"
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8">
+      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <ol className="space-y-7">
           {timelineData.entries.map((entry, i) => (
             <motion.li

@@ -58,7 +58,7 @@ export default function Resume() {
       designation="Artifact // TMA-1708"
       title="The record of the voyage."
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8">
+      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <TypedLine text="ARCHITECT TERMINAL v5.2 — connection stable" delay={300} />
         <TypedLine text="> query vishnu.priyan --full-profile" delay={1100} />
         <TypedLine

@@ -72,7 +72,7 @@ export default function SectionShell({
               }}
             />
             <div
-              className="pointer-events-auto holo-panel holo-corners mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-xl p-5"
+              className="pointer-events-auto holo-panel holo-corners mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-xl p-5" data-lenis-prevent
             >
               <p className="eyebrow mb-2 text-[9px]">{designation}</p>
               <h2 className="mb-4 font-display text-2xl font-bold leading-tight tracking-tight">

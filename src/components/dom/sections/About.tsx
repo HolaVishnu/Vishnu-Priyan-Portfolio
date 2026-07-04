@@ -10,7 +10,7 @@ export default function About() {
       designation="Planet 01 // Origin"
       title="Architecture is a creative act."
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8">
+      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <p className="text-base leading-relaxed text-star/90 md:text-lg">
           {profile.bio[0]}
         </p>

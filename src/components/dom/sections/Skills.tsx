@@ -12,7 +12,7 @@ export default function Skills() {
       designation="Star cluster // NGC-1708"
       title="A constellation of disciplines."
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8">
+      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <p className="text-sm leading-relaxed text-dim">
           Every discipline is a star. Hover them to trace the constellations —
           the ServiceNow platform feeds the data model, the ITAM estate

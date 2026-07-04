@@ -15,21 +15,48 @@ interface Skill {
   note: string;
 }
 
-/** Deterministic pseudo-random from a string id, so layout is stable. */
-function seeded(id: string, salt: number): number {
-  let h = salt;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 2147483647;
-  return (h % 1000) / 1000;
-}
-
-// Offsets keep every cluster centre-right of the camera's view axis —
-// leftward offsets would put stars behind the section panel.
-const GROUP_OFFSETS: Record<string, [number, number, number]> = {
-  platform: [0, -0.5, 0],
-  itam: [3.5, -5.5, -2.5],
-  cloud: [8, 3.5, -3.5],
-  architecture: [0.5, 4.6, 3.5],
+// Hand-plotted star chart (local units, +x right, +y up, small z for depth).
+// Every star has an authored position so the connection pairs in skills.json
+// trace real constellation figures — chains, fans and forks like a sky map —
+// instead of clumping into group blobs.
+//
+// Figures: the platform fan radiates from ServiceNow; the ITAM chain runs
+// sam → flexera → fnms → bigfix with a scorpion tail (ham → tanium → sccm);
+// cloud forms a "Y" off AWS; architecture arcs across the top with long
+// bridge strokes down to ServiceNow and AWS.
+const CHART: Record<string, [number, number, number]> = {
+  // ServiceNow platform (cyan) — lower left fan
+  servicenow:    [-7.2, -1.8,  0.5],
+  itsm:          [-5.8,  1.4, -0.5],
+  itom:          [-4.7, -1.1,  1  ],
+  cmdb:          [-4.0, -3.6,  0  ],
+  csdm:          [-1.8, -4.5,  1.5],
+  // ITAM & endpoint (violet) — central chain with a tail
+  snow:          [-1.6,  0.4, -1  ],
+  sam:           [-0.9, -2.3,  0.5],
+  ham:           [ 0.5, -5.0, -0.5],
+  tanium:        [ 2.2, -6.3,  1  ],
+  sccm:          [ 4.5, -6.7,  0  ],
+  "flexera-one": [ 1.8, -0.9,  0  ],
+  fnms:          [ 4.0, -2.3, -1  ],
+  bigfix:        [ 5.9, -3.6,  0.5],
+  fsm:           [ 2.7,  1.4,  1  ],
+  fdp:           [ 4.5,  0,   -0.5],
+  // Cloud & observability (magenta) — upper right "Y"
+  aws:           [ 3.6,  3.6,  0  ],
+  observe:       [ 5.4,  5.4, -1  ],
+  solarwinds:    [ 7.7,  4.5,  0.5],
+  pagerduty:     [ 5.9,  7.2,  0  ],
+  // Architecture & practice (white) — upper left arc
+  architecture:  [-4.5,  4.5, -0.5],
+  integration:   [-2.2,  5.9,  0.5],
+  itil:          [-6.8,  4.1,  1  ],
+  ai:            [-2.7,  2.7, -1  ],
 };
+
+// The chart is authored centred on (0,0); shift it right of the camera's
+// view axis so no star hides behind the left-side section panel.
+const CHART_SHIFT = new THREE.Vector3(8, 0, 0);
 
 function Star({
   skill,
@@ -122,15 +149,10 @@ export default function SkillConstellation() {
     );
 
     for (const skill of skillsData.skills as Skill[]) {
-      const offset = GROUP_OFFSETS[skill.group] ?? [0, 0, 0];
-      const jitter = new THREE.Vector3(
-        (seeded(skill.id, 7) - 0.5) * 7.5,
-        (seeded(skill.id, 13) - 0.5) * 5.5,
-        (seeded(skill.id, 29) - 0.5) * 6
-      );
+      const local = CHART[skill.id] ?? [0, 0, 0];
       positions.set(
         skill.id,
-        center.clone().add(new THREE.Vector3(...offset)).add(jitter)
+        center.clone().add(CHART_SHIFT).add(new THREE.Vector3(...local))
       );
       colors.set(skill.id, groupColor.get(skill.group) ?? "#4ff2ff");
     }
@@ -138,7 +160,7 @@ export default function SkillConstellation() {
   }, []);
 
   return (
-    <group>
+    <group visible={labelsVisible}>
       {(skillsData.skills as Skill[]).map((skill) => (
         <Star
           key={skill.id}

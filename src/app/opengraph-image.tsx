@@ -118,7 +118,6 @@ export default function OgImage() {
             letterSpacing: "-0.04em",
             textAlign: "center",
             background: "linear-gradient(100deg, #4ff2ff 0%, #7b5cff 50%, #c86bff 100%)",
-            // @ts-expect-error — Satori supports backgroundClip at runtime.
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             color: "transparent",

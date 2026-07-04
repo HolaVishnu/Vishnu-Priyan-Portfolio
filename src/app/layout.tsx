@@ -48,12 +48,21 @@ export const metadata: Metadata = {
       "An interactive voyage through 15 years of enterprise platform architecture. Six worlds. One journey.",
     type: "website",
     siteName: "The Architect's Universe",
+    images: [
+      {
+        url: "/Vishnu-Priyan-Portfolio/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "The Architect's Universe — Vishnu Priyaan",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Vishnu Priyaan — The Architect's Universe",
     description:
       "An interactive voyage through 15 years of enterprise platform architecture.",
+    images: ["/Vishnu-Priyan-Portfolio/opengraph-image.png"],
   },
 };
 

@@ -20,7 +20,7 @@ const SENDING_LINES = [
 // free at https://web3forms.com (email → instant key) and paste it here.
 // Until a key is set, the form falls back to opening a pre-filled mail
 // compose so no transmission is ever silently lost.
-const WEB3FORMS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+const WEB3FORMS_KEY = "e4270272-2e05-41af-9aeb-ec1c4105f2c7";
 const RELAY_CONFIGURED = !WEB3FORMS_KEY.startsWith("YOUR_");
 
 export default function Contact() {

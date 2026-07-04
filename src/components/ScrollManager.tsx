@@ -57,8 +57,17 @@ export default function ScrollManager() {
     // Also drive the per-section ambient engine.
     const unsubscribe = useUniverse.subscribe((state, prev) => {
       if (state.focusedProject !== prev.focusedProject) {
-        if (state.focusedProject) lenis.stop();
-        else if (state.phase === "journey") lenis.start();
+        if (state.focusedProject) {
+          lenis.stop();
+        } else if (state.phase === "journey") {
+          lenis.start();
+          // Snap scroll back to the exact progress position we were at before
+          // docking, so the camera returns to the right section, not position 0.
+          const limit = document.documentElement.scrollHeight - window.innerHeight;
+          if (limit > 0) {
+            lenis.scrollTo(state.progress * limit, { immediate: true });
+          }
+        }
       }
       // Ambient section morph
       if (state.activeSection !== prev.activeSection) {

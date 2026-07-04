@@ -222,10 +222,9 @@ class AmbientEngine {
     // Fade out old oscillators
     for (const osc of oldOscs) {
       try {
-        const g = this.ctx.createGain();
         // We can't easily fade osc gain here (already connected), just stop them
         osc.stop(now + FADE);
-      } catch (_) { /* already stopped */ }
+      } catch { /* already stopped */ }
     }
 
     // Spin up new oscillators

@@ -95,7 +95,8 @@ export default function Hud() {
           {/* Identity — top left */}
           <div className="absolute left-6 top-6 font-mono text-[10px] uppercase tracking-[0.3em] md:left-10 md:top-8">
             <p className="text-star/90">
-              {profile.name} <span className="text-dim">// {profile.callsign}</span>
+              {profile.name}{" "}
+              <span className="text-dim">{"// "}{profile.callsign}</span>
             </p>
             <p className="mt-1.5 flex items-center gap-2 text-dim">
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />

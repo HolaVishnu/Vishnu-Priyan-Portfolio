@@ -160,7 +160,10 @@ export default function SkillConstellation() {
   }, []);
 
   return (
-    <group visible={labelsVisible}>
+    // Stars and lines are always in the scene — they're the landmark you fly
+    // toward, so hiding them until arrival made the approach look blacked out.
+    // Only the HTML labels wait for the skills section (labelsVisible).
+    <group>
       {(skillsData.skills as Skill[]).map((skill) => (
         <Star
           key={skill.id}

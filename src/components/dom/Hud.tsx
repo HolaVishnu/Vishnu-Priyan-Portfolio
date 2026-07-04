@@ -11,6 +11,12 @@ import profile from "../../data/profile.json";
 // Toggling audioOn is enough: MusicController reacts synchronously (inside
 // the same click gesture), starting the soundtrack or the drone fallback.
 
+// public/ assets sit under the GitHub Pages basePath in production but at
+// the root in dev — a hardcoded prod path 404s on localhost.
+const NOMINATE_HREF =
+  (process.env.NODE_ENV === "production" ? "/Vishnu-Priyan-Portfolio" : "") +
+  "/nominate.html";
+
 const tmpPos = new THREE.Vector3();
 const tmpTarget = new THREE.Vector3();
 
@@ -117,7 +123,7 @@ export default function Hud() {
             )}
             {/* Awwwards nominate badge */}
             <a
-              href="/Vishnu-Priyan-Portfolio/nominate.html"
+              href={NOMINATE_HREF}
               target="_blank"
               rel="noopener"
               className="pointer-events-auto mt-1 hidden items-center gap-1.5 md:flex"

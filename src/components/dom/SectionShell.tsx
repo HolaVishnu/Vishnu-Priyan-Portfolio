@@ -44,7 +44,7 @@ export default function SectionShell({
           >
             <div className="pointer-events-auto w-full max-w-xl">
               <p className="eyebrow mb-4">{designation}</p>
-              <h2 className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight">
+              <h2 className="mb-6 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl">
                 {title}
               </h2>
               {children}
@@ -75,7 +75,7 @@ export default function SectionShell({
               className="pointer-events-auto holo-panel holo-corners mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-xl p-5" data-lenis-prevent
             >
               <p className="eyebrow mb-2 text-[9px]">{designation}</p>
-              <h2 className="mb-4 font-display text-2xl font-bold leading-tight tracking-tight">
+              <h2 className="mb-4 font-display text-xl font-bold leading-tight tracking-tight">
                 {title}
               </h2>
               {children}

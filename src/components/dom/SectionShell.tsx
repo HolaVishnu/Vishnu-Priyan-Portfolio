@@ -8,6 +8,7 @@ interface SectionShellProps {
   id: string;
   designation: string;
   title: ReactNode;
+  subtitle?: ReactNode;
   side?: "left" | "right";
   children: ReactNode;
 }
@@ -21,6 +22,7 @@ export default function SectionShell({
   id,
   designation,
   title,
+  subtitle,
   side = "left",
   children,
 }: SectionShellProps) {
@@ -42,12 +44,23 @@ export default function SectionShell({
               side === "right" ? "justify-end" : "justify-start"
             }`}
           >
-            <div className="pointer-events-auto w-full max-w-xl">
-              <p className="eyebrow mb-4">{designation}</p>
-              <h2 className="mb-6 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl">
-                {title}
-              </h2>
-              {children}
+            <div className="pointer-events-auto flex w-full max-w-[44rem] gap-6">
+              <div className="section-rail hidden w-16 shrink-0 lg:flex">
+                <span className="section-rail-line" />
+                <div className="section-rail-copy">
+                  <span className="section-rail-label">Orbit</span>
+                  <span className="section-rail-id">{designation.split("//")[0]?.trim()}</span>
+                </div>
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="section-shell">
+                  <p className="eyebrow mb-4">{designation}</p>
+                  <h2 className="section-title">{title}</h2>
+                  {subtitle && <p className="section-subtitle">{subtitle}</p>}
+                  <div className="section-divider" />
+                  {children}
+                </div>
+              </div>
             </div>
           </motion.section>
 
@@ -72,12 +85,12 @@ export default function SectionShell({
               }}
             />
             <div
-              className="pointer-events-auto holo-panel holo-corners mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-xl p-5" data-lenis-prevent
+              className="pointer-events-auto section-shell mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-xl p-5"
+              data-lenis-prevent
             >
               <p className="eyebrow mb-2 text-[9px]">{designation}</p>
-              <h2 className="mb-4 font-display text-xl font-bold leading-tight tracking-tight">
-                {title}
-              </h2>
+              <h2 className="section-title !mb-3 !text-xl">{title}</h2>
+              {subtitle && <p className="section-subtitle mb-4 !text-sm">{subtitle}</p>}
               {children}
             </div>
           </motion.section>

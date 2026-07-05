@@ -10,9 +10,10 @@ export default function Timeline() {
       id="timeline"
       designation="Satellite network // K-Belt"
       title="Every orbit taught me something."
+      subtitle="A career sequence shaped by banking, consulting, service operations, and large-scale platform modernisation."
       side="right"
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
+      <div className="section-surface max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <ol className="space-y-7">
           {timelineData.entries.map((entry, i) => (
             <motion.li

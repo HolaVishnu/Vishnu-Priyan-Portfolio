@@ -15,7 +15,7 @@ export default function ProjectDossier() {
   const project = projectsData.projects.find((p) => p.id === focusedProject);
 
   const undock = () => {
-    useUniverse.getState().setFocusedProject(null);
+    useUniverse.getState().startProjectUndock();
     sound.blip();
   };
 
@@ -38,6 +38,7 @@ export default function ProjectDossier() {
           exit={{ opacity: 0, x: 60 }}
           transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           aria-label={`${project.title} dossier`}
+          data-lenis-prevent
           className="holo-panel holo-corners fixed inset-x-4 bottom-4 top-4 z-40 overflow-y-auto p-6 md:inset-x-auto md:right-6 md:w-[540px] md:p-8"
         >
           <div className="flex items-start justify-between gap-4">
@@ -52,6 +53,7 @@ export default function ProjectDossier() {
               type="button"
               onClick={undock}
               autoFocus
+              aria-label={`Undock from ${project.title}`}
               className="shrink-0 rounded border border-cyan/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-cyan transition-colors hover:bg-cyan hover:text-void"
             >
               ✕ Undock

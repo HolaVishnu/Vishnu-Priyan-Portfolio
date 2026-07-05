@@ -55,7 +55,7 @@ function Station({
       ref={groupRef}
       onClick={(e) => {
         e.stopPropagation();
-        useUniverse.getState().setFocusedProject(id);
+        useUniverse.getState().startProjectDock(id);
         sound.confirm();
       }}
       onPointerOver={(e) => {

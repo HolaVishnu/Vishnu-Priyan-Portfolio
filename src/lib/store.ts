@@ -3,6 +3,7 @@ import { create } from "zustand";
 export type Phase = "boot" | "landing" | "journey";
 export type Transmission = "idle" | "sending" | "sent";
 export type Quality = "high" | "low";
+export type ProjectFlightPhase = "idle" | "docking" | "docked" | "undocking";
 
 export interface AchievementUnlock {
   id: string;
@@ -17,6 +18,8 @@ interface UniverseState {
   velocity: number;
   activeSection: string | null;
   focusedProject: string | null;
+  projectFlightPhase: ProjectFlightPhase;
+  projectFlightProject: string | null;
   audioOn: boolean;
   warp: boolean;
   transmission: Transmission;
@@ -30,7 +33,10 @@ interface UniverseState {
   setPhase: (phase: Phase) => void;
   setProgress: (progress: number, velocity: number) => void;
   setActiveSection: (id: string | null) => void;
-  setFocusedProject: (id: string | null) => void;
+  startProjectDock: (id: string) => void;
+  finishProjectDock: () => void;
+  startProjectUndock: () => void;
+  finishProjectUndock: (returnProgress: number) => void;
   setAudioOn: (on: boolean) => void;
   setWarp: (warp: boolean) => void;
   setTransmission: (t: Transmission) => void;
@@ -46,6 +52,8 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   velocity: 0,
   activeSection: null,
   focusedProject: null,
+  projectFlightPhase: "idle",
+  projectFlightProject: null,
   audioOn: false,
   warp: false,
   transmission: "idle",
@@ -58,7 +66,44 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   setPhase: (phase) => set({ phase }),
   setProgress: (progress, velocity) => set({ progress, velocity }),
   setActiveSection: (activeSection) => set({ activeSection }),
-  setFocusedProject: (focusedProject) => set({ focusedProject }),
+  startProjectDock: (id) => {
+    if (get().projectFlightPhase !== "idle") return;
+    set({
+      focusedProject: id,
+      projectFlightProject: id,
+      projectFlightPhase: "docking",
+      velocity: 0,
+    });
+  },
+  finishProjectDock: () => {
+    if (get().projectFlightPhase !== "docking") return;
+    set({ projectFlightPhase: "docked", velocity: 0 });
+  },
+  startProjectUndock: () => {
+    const { projectFlightPhase, projectFlightProject } = get();
+    if (
+      !projectFlightProject ||
+      (projectFlightPhase !== "docking" && projectFlightPhase !== "docked")
+    ) {
+      return;
+    }
+    set({
+      focusedProject: null,
+      projectFlightPhase: "undocking",
+      velocity: 0,
+    });
+  },
+  finishProjectUndock: (returnProgress) => {
+    if (get().projectFlightPhase !== "undocking") return;
+    set({
+      focusedProject: null,
+      projectFlightProject: null,
+      projectFlightPhase: "idle",
+      progress: returnProgress,
+      activeSection: "projects",
+      velocity: 0,
+    });
+  },
   setAudioOn: (audioOn) => set({ audioOn }),
   setWarp: (warp) => set({ warp }),
   setTransmission: (transmission) => set({ transmission }),

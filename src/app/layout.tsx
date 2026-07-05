@@ -20,6 +20,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vishnu-priyan-portfolio.vercel.app"),
   title: "Vishnu Priyaan — The Architect's Universe",
   description:
     "Infrastructure & ITSM Solutions Architect. 15+ years of ServiceNow and Flexera platform transformations — ITSM, ITOM, CMDB, CSDM, SAM, HAM — told as an interactive journey through space.",
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "The Architect's Universe",
     images: [
       {
-        url: "/Vishnu-Priyan-Portfolio/opengraph-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "The Architect's Universe — Vishnu Priyaan",
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
     title: "Vishnu Priyaan — The Architect's Universe",
     description:
       "An interactive voyage through 15 years of enterprise platform architecture.",
-    images: ["/Vishnu-Priyan-Portfolio/opengraph-image.png"],
+    images: ["/opengraph-image"],
   },
 };
 

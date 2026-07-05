@@ -30,6 +30,8 @@ export default function Hud() {
   const activeSection = useUniverse((s) => s.activeSection);
   const audioOn = useUniverse((s) => s.audioOn);
   const nowPlaying = useUniverse((s) => s.nowPlaying);
+  const focusedProject = useUniverse((s) => s.focusedProject);
+  const projectFlightPhase = useUniverse((s) => s.projectFlightPhase);
 
   const destRef = useRef<HTMLSpanElement>(null);
   const destMobileRef = useRef<HTMLSpanElement>(null);
@@ -84,7 +86,7 @@ export default function Hud() {
 
   return (
     <AnimatePresence>
-      {phase === "journey" && (
+      {phase === "journey" && !focusedProject && projectFlightPhase === "idle" && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

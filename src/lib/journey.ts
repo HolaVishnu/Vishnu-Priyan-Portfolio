@@ -91,6 +91,13 @@ export const WORLD = {
   contactMoon: [1, 3, -212] as const,
 };
 
+export const PROJECTS_OVERVIEW = {
+  // Identical to the Projects spline stop so control can return to scroll
+  // without a second camera correction after the cinematic undock.
+  camera: [-8, -0.5, -46] as const,
+  target: [-26, -3, -66] as const,
+};
+
 const camPoints: THREE.Vector3[] = [
   new THREE.Vector3(0, 1, 96),
   ...STOPS.map((s) => new THREE.Vector3(...s.camera)),

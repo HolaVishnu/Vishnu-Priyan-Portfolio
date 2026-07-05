@@ -7,7 +7,7 @@ import projectsData from "../../../data/projects.json";
 
 export default function Projects() {
   const dock = (id: string) => {
-    useUniverse.getState().setFocusedProject(id);
+    useUniverse.getState().startProjectDock(id);
     sound.confirm();
   };
 

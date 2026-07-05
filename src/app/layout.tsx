@@ -82,7 +82,9 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${instrument.variable} ${plexMono.variable} antialiased`}
     >
-      <body className="bg-void text-star font-sans">{children}</body>
+      <body suppressHydrationWarning className="bg-void text-star font-sans">
+        {children}
+      </body>
     </html>
   );
 }

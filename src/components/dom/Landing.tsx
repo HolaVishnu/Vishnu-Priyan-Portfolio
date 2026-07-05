@@ -320,7 +320,7 @@ export default function Landing() {
                   onClick={toggleAudio}
                   className="font-mono text-[10px] uppercase tracking-[0.3em] text-dim/60 transition-colors hover:text-cyan"
                 >
-                  {audioOn ? "◉ Sound on" : "○ Enable sound"}
+                  {audioOn ? "◉ Disable sound" : "○ Enable sound"}
                 </button>
               </motion.div>
             </div>

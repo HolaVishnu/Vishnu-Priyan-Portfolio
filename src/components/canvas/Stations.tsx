@@ -26,9 +26,14 @@ function Station({
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const angleRef = useRef((index / total) * Math.PI * 2 + 0.4);
-  const labelVisible = useUniverse(
-    (s) => s.activeSection === "projects" || s.focusedProject === id
-  );
+  const labelVisible = useUniverse((s) => {
+    const inProjectsOverview =
+      s.activeSection === "projects" &&
+      s.projectFlightPhase === "idle" &&
+      !s.focusedProject;
+
+    return inProjectsOverview;
+  });
 
   useFrame((state, delta) => {
     const group = groupRef.current;
@@ -55,47 +60,88 @@ function Station({
       ref={groupRef}
       onClick={(e) => {
         e.stopPropagation();
-        useUniverse.getState().startProjectDock(id);
+        const store = useUniverse.getState();
+        if (store.projectFlightPhase !== "idle" || store.focusedProject) return;
+        store.startProjectDock(id);
         sound.confirm();
       }}
       onPointerOver={(e) => {
         e.stopPropagation();
-        sound.blip();
+        const store = useUniverse.getState();
+        if (store.projectFlightPhase !== "idle" || store.focusedProject) return;
         document.body.dataset.cursorHover = "true";
       }}
       onPointerOut={() => {
         delete document.body.dataset.cursorHover;
       }}
     >
+      <mesh scale={1.55}>
+        <octahedronGeometry args={[0.95, 0]} />
+        <meshBasicMaterial
+          color="#56e6ff"
+          transparent
+          opacity={0.08}
+          toneMapped={false}
+        />
+      </mesh>
+
       {/* Core hull */}
-      <mesh>
-        <octahedronGeometry args={[0.85, 0]} />
-        <meshStandardMaterial color="#131a38" metalness={0.7} roughness={0.3} />
+      <mesh scale={1.2}>
+        <octahedronGeometry args={[0.95, 0]} />
+        <meshStandardMaterial
+          color="#18224b"
+          metalness={0.82}
+          roughness={0.24}
+          emissive="#1d2f6c"
+          emissiveIntensity={0.7}
+        />
       </mesh>
 
       {/* Habitation ring */}
-      <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]}>
-        <torusGeometry args={[1.5, 0.05, 12, 64]} />
-        <meshBasicMaterial color="#4ff2ff" toneMapped={false} />
+      <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]} scale={1.14}>
+        <torusGeometry args={[1.6, 0.07, 16, 64]} />
+        <meshBasicMaterial color="#69f4ff" toneMapped={false} />
+      </mesh>
+
+      <mesh rotation={[Math.PI / 2.4, 0, 0]} scale={1.22}>
+        <torusGeometry args={[1.7, 0.04, 12, 64]} />
+        <meshBasicMaterial
+          color="#4ff2ff"
+          transparent
+          opacity={0.34}
+          toneMapped={false}
+        />
       </mesh>
 
       {/* Solar wings */}
-      <mesh position={[1.9, 0, 0]}>
-        <boxGeometry args={[1.6, 0.04, 0.7]} />
-        <meshStandardMaterial color="#2a2260" metalness={0.4} roughness={0.4} emissive="#4130a8" emissiveIntensity={0.6} />
+      <mesh position={[2.25, 0, 0]}>
+        <boxGeometry args={[1.95, 0.06, 0.9]} />
+        <meshStandardMaterial
+          color="#2a2260"
+          metalness={0.46}
+          roughness={0.34}
+          emissive="#4f39c4"
+          emissiveIntensity={0.75}
+        />
       </mesh>
-      <mesh position={[-1.9, 0, 0]}>
-        <boxGeometry args={[1.6, 0.04, 0.7]} />
-        <meshStandardMaterial color="#2a2260" metalness={0.4} roughness={0.4} emissive="#4130a8" emissiveIntensity={0.6} />
+      <mesh position={[-2.25, 0, 0]}>
+        <boxGeometry args={[1.95, 0.06, 0.9]} />
+        <meshStandardMaterial
+          color="#2a2260"
+          metalness={0.46}
+          roughness={0.34}
+          emissive="#4f39c4"
+          emissiveIntensity={0.75}
+        />
       </mesh>
 
       {/* Comms mast + beacon */}
-      <mesh position={[0, 1.15, 0]}>
-        <cylinderGeometry args={[0.02, 0.02, 0.9, 6]} />
+      <mesh position={[0, 1.45, 0]}>
+        <cylinderGeometry args={[0.03, 0.03, 1.15, 6]} />
         <meshStandardMaterial color="#39406b" metalness={0.6} roughness={0.4} />
       </mesh>
-      <mesh position={[0, 1.65, 0]}>
-        <sphereGeometry args={[0.07, 12, 12]} />
+      <mesh position={[0, 2.05, 0]}>
+        <sphereGeometry args={[0.11, 14, 14]} />
         <meshBasicMaterial color="#c86bff" toneMapped={false} />
       </mesh>
 

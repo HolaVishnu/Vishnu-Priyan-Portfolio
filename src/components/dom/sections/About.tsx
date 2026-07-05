@@ -16,8 +16,9 @@ export default function About() {
       id="about"
       designation="Planet 01 // Origin"
       title="Architecture is the invisible force behind every resilient enterprise."
+      subtitle="A systems-minded practice built across infrastructure, service operations, governance, and enterprise transformation."
     >
-      <div className="holo-panel holo-corners max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
+      <div className="section-surface max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
         <p className="text-base leading-relaxed text-star/90 md:text-lg">
           {profile.bio[0]}
         </p>

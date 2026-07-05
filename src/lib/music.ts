@@ -2,13 +2,6 @@ import { useUniverse } from "./store";
 import { sound } from "./sound";
 import soundtrackData from "../data/soundtrack.json";
 
-/**
- * Zone-based soundtrack engine. Tracks live in /public/audio (see the README
- * there); each journey zone crossfades into its own track. If a file is
- * missing the engine falls back to the generative ambient drone, so the
- * experience works with or without the soundtrack installed.
- */
-
 interface TrackDef {
   id: string;
   title: string;
@@ -16,105 +9,149 @@ interface TrackDef {
   file: string;
 }
 
-const FADE_MS = 1800;
+const FADE_MS = 1400;
 const TARGET_VOLUME = 0.32;
 
+/**
+ * A single-channel soundtrack engine. Every zone uses the same media element,
+ * so two songs can never remain audible at the same time. Project docking
+ * leaves this channel untouched; zone selection resumes after undocking.
+ */
 class MusicEngine {
-  private players = new Map<string, HTMLAudioElement>();
-  private missing = new Set<string>();
-  private fades = new Map<string, number>();
+  private player: HTMLAudioElement | null = null;
   private currentId: string | null = null;
+  private loadedId: string | null = null;
   private enabled = false;
+  private playbackRequest = 0;
+  private fadeTimer: number | null = null;
 
   private getTrack(id: string): TrackDef | undefined {
-    return (soundtrackData.tracks as TrackDef[]).find((t) => t.id === id);
+    return (soundtrackData.tracks as TrackDef[]).find((track) => track.id === id);
   }
 
-  private getPlayer(id: string): HTMLAudioElement | null {
-    if (this.missing.has(id)) return null;
-    let player = this.players.get(id);
-    if (!player) {
-      const track = this.getTrack(id);
-      if (!track) return null;
-      player = new Audio(track.file);
-      player.loop = true;
-      player.preload = "auto";
-      player.volume = 0;
-      player.addEventListener("error", () => {
-        this.missing.add(id);
-        if (this.currentId === id) this.fallbackToDrone();
-      });
-      this.players.set(id, player);
-    }
+  private getPlayer() {
+    if (this.player) return this.player;
+
+    const player = new Audio();
+    player.loop = true;
+    player.preload = "auto";
+    player.volume = 0;
+    player.addEventListener("error", () => {
+      if (this.loadedId === this.currentId) this.fallbackToDrone();
+    });
+    this.player = player;
     return player;
   }
 
-  private fade(player: HTMLAudioElement, to: number) {
-    const key = player.src;
-    const existing = this.fades.get(key);
-    if (existing) window.clearInterval(existing);
+  private clearFade() {
+    if (this.fadeTimer === null) return;
+    window.clearInterval(this.fadeTimer);
+    this.fadeTimer = null;
+  }
 
+  private fadeTo(target: number) {
+    const player = this.player;
+    if (!player) return;
+
+    this.clearFade();
     const from = player.volume;
-    const start = Date.now();
-    const interval = window.setInterval(() => {
-      const t = Math.min((Date.now() - start) / FADE_MS, 1);
-      player.volume = from + (to - from) * t;
-      if (t >= 1) {
-        window.clearInterval(interval);
-        this.fades.delete(key);
-        if (to === 0) player.pause();
-      }
+    const startedAt = Date.now();
+    this.fadeTimer = window.setInterval(() => {
+      const elapsed = Date.now() - startedAt;
+      const progress = Math.min(elapsed / FADE_MS, 1);
+      player.volume = from + (target - from) * progress;
+      if (progress === 1) this.clearFade();
     }, 50);
-    this.fades.set(key, interval);
+  }
+
+  private stopPlayer() {
+    this.clearFade();
+    if (!this.player) return;
+    this.player.pause();
+    this.player.volume = 0;
   }
 
   private fallbackToDrone() {
     if (!this.enabled) return;
+    this.stopPlayer();
     useUniverse.getState().setNowPlaying(null);
     sound.start();
   }
 
-  /** Called by MusicController whenever the journey enters a new zone. */
   setZoneTrack(id: string) {
-    if (this.currentId === id) return;
+    if (this.currentId === id) {
+      if (this.enabled && this.player?.paused) this.playCurrent();
+      return;
+    }
+
     this.currentId = id;
+    this.playbackRequest += 1;
     if (this.enabled) this.playCurrent();
   }
 
   private playCurrent() {
     const id = this.currentId;
-    if (!id) return;
+    if (!id || !this.enabled) return;
 
-    for (const [pid, player] of this.players) {
-      if (pid !== id && !player.paused) this.fade(player, 0);
-    }
-
-    const player = this.getPlayer(id);
-    if (!player) {
+    const track = this.getTrack(id);
+    if (!track) {
       this.fallbackToDrone();
       return;
     }
 
-    const track = this.getTrack(id)!;
+    const player = this.getPlayer();
+    const request = ++this.playbackRequest;
+
+    if (this.loadedId !== id) {
+      // Replacing src on the one shared player synchronously terminates the
+      // previous song before the next asynchronous play request begins.
+      this.stopPlayer();
+      this.loadedId = id;
+      player.src = track.file;
+      player.load();
+    }
+
+    if (!player.paused) {
+      sound.mute();
+      useUniverse
+        .getState()
+        .setNowPlaying(`${track.title} · ${track.artist} · NCS`);
+      this.fadeTo(TARGET_VOLUME);
+      return;
+    }
+
+    player.volume = 0;
     player
       .play()
       .then(() => {
-        sound.mute(); // the drone yields to the soundtrack
+        if (
+          request !== this.playbackRequest ||
+          this.currentId !== id ||
+          this.loadedId !== id ||
+          !this.enabled
+        ) {
+          return;
+        }
+
+        sound.mute();
         useUniverse
           .getState()
           .setNowPlaying(`${track.title} · ${track.artist} · NCS`);
-        this.fade(player, TARGET_VOLUME);
+        this.fadeTo(TARGET_VOLUME);
       })
-      .catch((err: DOMException) => {
-        // Only blacklist genuinely unplayable files. An autoplay-policy
-        // rejection (NotAllowedError) is transient — the next user gesture
-        // will succeed, so the track must stay eligible.
-        if (err?.name === "NotSupportedError") this.missing.add(id);
-        this.fallbackToDrone();
+      .catch((error: DOMException) => {
+        if (
+          request === this.playbackRequest &&
+          this.currentId === id &&
+          this.enabled &&
+          error?.name !== "AbortError"
+        ) {
+          this.fallbackToDrone();
+        }
       });
   }
 
-  /** Must be called from a user gesture (autoplay policy). */
+  /** Must be reached from a user gesture to satisfy browser autoplay policy. */
   enable() {
     this.enabled = true;
     if (this.currentId) this.playCurrent();
@@ -123,9 +160,8 @@ class MusicEngine {
 
   disable() {
     this.enabled = false;
-    for (const player of this.players.values()) {
-      if (!player.paused) this.fade(player, 0);
-    }
+    this.playbackRequest += 1;
+    this.stopPlayer();
     sound.mute();
     useUniverse.getState().setNowPlaying(null);
   }

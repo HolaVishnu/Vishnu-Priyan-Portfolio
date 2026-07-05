@@ -54,7 +54,7 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   focusedProject: null,
   projectFlightPhase: "idle",
   projectFlightProject: null,
-  audioOn: false,
+  audioOn: true,
   warp: false,
   transmission: "idle",
   quality: "high",
@@ -67,7 +67,8 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   setProgress: (progress, velocity) => set({ progress, velocity }),
   setActiveSection: (activeSection) => set({ activeSection }),
   startProjectDock: (id) => {
-    if (get().projectFlightPhase !== "idle") return;
+    const { projectFlightPhase } = get();
+    if (projectFlightPhase !== "idle") return;
     set({
       focusedProject: id,
       projectFlightProject: id,

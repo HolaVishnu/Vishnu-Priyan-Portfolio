@@ -4,13 +4,16 @@ import Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import { STOPS, activeStopAt } from "../lib/journey";
 import { useUniverse } from "../lib/store";
-import { ambient } from "../lib/sound";
 
 const EASE_OUT = (x: number) => 1 - Math.pow(1 - x, 3);
 const PROJECTS_PROGRESS =
   STOPS.find((stop) => stop.id === "projects")?.t ?? 0.47;
 
-/** Lenis owns journey scroll; CameraRig exclusively owns project flights. */
+/**
+ * Owns Lenis and the journey scroll position. Project flights are a hard
+ * hand-off: Lenis is frozen until CameraRig reports that undocking has fully
+ * reached Forge Prime, then scroll is synchronized once and resumed.
+ */
 export default function ScrollManager() {
   const lenisRef = useRef<Lenis | null>(null);
   const resumeRafRef = useRef<number | null>(null);
@@ -47,6 +50,9 @@ export default function ScrollManager() {
       lenis.resize();
       const limit = document.documentElement.scrollHeight - window.innerHeight;
       if (limit > 0) {
+        // Lenis deliberately remains stopped during this synchronization.
+        // `force` permits the exact scroll write without briefly re-enabling
+        // wheel input and creating another owner for the camera.
         lenis.scrollTo(PROJECTS_PROGRESS * limit, {
           immediate: true,
           force: true,
@@ -103,13 +109,6 @@ export default function ScrollManager() {
         if (completedUndock) resumeJourneyAtProjects();
       }
 
-      if (state.activeSection !== prev.activeSection) {
-        ambient.setSection(state.activeSection);
-      }
-      if (state.audioOn !== prev.audioOn) {
-        if (state.audioOn) ambient.enable();
-        else ambient.disable();
-      }
     });
 
     return () => {

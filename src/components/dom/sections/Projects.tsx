@@ -6,10 +6,18 @@ import { sound } from "../../../lib/sound";
 import projectsData from "../../../data/projects.json";
 
 export default function Projects() {
+  const projectFlightPhase = useUniverse((s) => s.projectFlightPhase);
+
   const dock = (id: string) => {
-    useUniverse.getState().startProjectDock(id);
+    const store = useUniverse.getState();
+    if (store.projectFlightPhase !== "idle" || store.focusedProject) return;
+    store.startProjectDock(id);
     sound.confirm();
   };
+
+  const overviewVisible = projectFlightPhase === "idle";
+
+  if (!overviewVisible) return null;
 
   return (
     <SectionShell
@@ -17,30 +25,30 @@ export default function Projects() {
       designation="Planet 03 // Forge Prime"
       title="Systems shipped into orbit."
     >
-      <div className="max-h-[58vh] space-y-3 overflow-y-auto pr-1" data-lenis-prevent>
+      <div className="grid grid-cols-2 gap-2.5">
         {projectsData.projects.map((project) => (
           <button
             key={project.id}
             type="button"
             onClick={() => dock(project.id)}
-            className="holo-panel group block w-full p-5 text-left transition-colors duration-300 hover:border-cyan/40"
+            className="holo-panel group block min-h-28 w-full p-4 text-left transition-colors duration-300 hover:border-cyan/40"
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan/70">
+            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan/70">
               {project.codename}
             </p>
-            <p className="mt-1.5 flex items-baseline justify-between gap-4 font-display text-lg font-semibold">
+            <p className="mt-1.5 flex items-baseline justify-between gap-3 font-display text-sm font-semibold">
               {project.title}
-              <span className="text-cyan transition-transform duration-300 group-hover:translate-x-1.5">
+              <span className="text-cyan transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-dim">
+            <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-dim">
               {project.tagline}
             </p>
           </button>
         ))}
-        <p className="pt-1 text-center font-mono text-[10px] uppercase tracking-[0.3em] text-dim">
-          Select a station to dock — or click one in orbit
+        <p className="col-span-2 pt-1 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-dim">
+          Select a mission dossier to initiate docking
         </p>
       </div>
     </SectionShell>

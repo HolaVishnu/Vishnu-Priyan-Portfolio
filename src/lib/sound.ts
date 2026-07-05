@@ -49,8 +49,14 @@ const SECTION_PROFILES: Record<string, SectionProfile> = {
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
+  private uiBus: GainNode | null = null;
   private lfo: OscillatorNode | null = null;
   private running = false;
+  private lastBlipAt = 0;
+  private lastConfirmAt = 0;
+  private confirmTailTimer: number | null = null;
+  private cueToken = 0;
+  private activeUiOscillators = new Set<OscillatorNode>();
 
   private ensureContext() {
     if (this.ctx) return;
@@ -62,6 +68,9 @@ class SoundEngine {
     this.master = this.ctx.createGain();
     this.master.gain.value = 0;
     this.master.connect(this.ctx.destination);
+    this.uiBus = this.ctx.createGain();
+    this.uiBus.gain.value = 1;
+    this.uiBus.connect(this.ctx.destination);
   }
 
   start() {
@@ -113,9 +122,19 @@ class SoundEngine {
     this.master.gain.setTargetAtTime(0, this.ctx.currentTime, 0.4);
   }
 
+  private stopUiTones() {
+    for (const osc of this.activeUiOscillators) {
+      try {
+        osc.stop();
+      } catch {
+        // oscillator may already be stopping
+      }
+    }
+    this.activeUiOscillators.clear();
+  }
+
   private tone(freqFrom: number, freqTo: number, gain: number, duration: number) {
-    if (!this.ctx || !this.master) return;
-    if (this.master.gain.value < 0.001) return;
+    if (!this.ctx || !this.uiBus) return;
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const g = this.ctx.createGain();
@@ -125,16 +144,45 @@ class SoundEngine {
     g.gain.setValueAtTime(gain, now);
     g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
     osc.connect(g);
-    g.connect(this.ctx.destination);
+    g.connect(this.uiBus);
+    this.activeUiOscillators.add(osc);
+    osc.onended = () => {
+      this.activeUiOscillators.delete(osc);
+      osc.onended = null;
+    };
     osc.start(now);
     osc.stop(now + duration + 0.02);
   }
 
-  blip() { this.tone(1240, 620, 0.04, 0.12); }
+  blip() {
+    const now = performance.now();
+    if (now - this.lastBlipAt < 90) return;
+    this.lastBlipAt = now;
+    this.cueToken += 1;
+    if (this.confirmTailTimer !== null) {
+      window.clearTimeout(this.confirmTailTimer);
+      this.confirmTailTimer = null;
+    }
+    this.stopUiTones();
+    this.tone(1240, 620, 0.04, 0.12);
+  }
 
   confirm() {
+    const now = performance.now();
+    if (now - this.lastConfirmAt < 240) return;
+    this.lastConfirmAt = now;
+    if (this.confirmTailTimer !== null) {
+      window.clearTimeout(this.confirmTailTimer);
+      this.confirmTailTimer = null;
+    }
+    const cueToken = ++this.cueToken;
+    this.stopUiTones();
     this.tone(520, 1040, 0.05, 0.22);
-    setTimeout(() => this.tone(780, 1560, 0.04, 0.28), 110);
+    this.confirmTailTimer = window.setTimeout(() => {
+      if (cueToken !== this.cueToken) return;
+      this.tone(780, 1560, 0.04, 0.28);
+      this.confirmTailTimer = null;
+    }, 110);
   }
 }
 

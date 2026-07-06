@@ -1,22 +1,44 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const syne = Syne({
+const syne = localFont({
   variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Syne-Variable.ttf",
+      style: "normal",
+    },
+  ],
 });
 
-const instrument = Instrument_Sans({
+const instrument = localFont({
   variable: "--font-instrument",
-  subsets: ["latin"],
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/InstrumentSans-Variable.ttf",
+      style: "normal",
+    },
+  ],
 });
 
-const plexMono = IBM_Plex_Mono({
+const plexMono = localFont({
   variable: "--font-plex",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/IBMPlexMono-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/IBMPlexMono-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+  ],
 });
 
 export const metadata: Metadata = {

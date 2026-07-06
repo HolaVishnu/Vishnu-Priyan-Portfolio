@@ -4,13 +4,16 @@ import SectionShell from "../SectionShell";
 import profileRaw from "../../../data/profile.json";
 
 const profile = profileRaw as typeof profileRaw & {
-  expertiseTitle: string;
   expertise: string[];
-  outcomesTitle: string;
   outcomes: string[];
+  principles: { title: string; detail: string }[];
 };
 
 export default function About() {
+  const featuredExpertise = profile.expertise.slice(0, 4);
+  const featuredOutcomes = profile.outcomes.slice(0, 4);
+  const featuredPrinciples = profile.principles.slice(0, 2);
+
   return (
     <SectionShell
       id="about"
@@ -18,56 +21,55 @@ export default function About() {
       title="Architecture is the invisible force behind every resilient enterprise."
       subtitle="A systems-minded practice built across infrastructure, service operations, governance, and enterprise transformation."
     >
-      <div className="section-surface max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
+      <div className="section-surface section-scroll-area p-6 md:p-8" data-lenis-prevent>
         <p className="text-base leading-relaxed text-star/90 md:text-lg">
           {profile.bio[0]}
         </p>
-        {profile.bio.slice(1).map((para) => (
-          <p key={para.slice(0, 24)} className="mt-4 text-sm leading-relaxed text-dim">
-            {para}
-          </p>
-        ))}
-
-        <div className="hairline my-6" />
-
-        {/* Expertise list */}
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan/80">
-          {profile.expertiseTitle}
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-dim">
+          I design the operating model behind the platform: trusted CMDBs,
+          governed ITAM estates, resilient cloud foundations, and the automation
+          layer that keeps large enterprises moving without depending on
+          heroics.
         </p>
-        <ul className="mt-3 space-y-1.5">
-          {profile.expertise.map((item) => (
-            <li key={item.slice(0, 32)} className="flex gap-2.5 text-xs leading-relaxed text-dim">
-              <span className="mt-0.5 shrink-0 text-nebula">▸</span>
-              {item}
-            </li>
-          ))}
-        </ul>
 
         <div className="hairline my-6" />
 
-        {/* Outcomes list */}
+        <div className="grid gap-3 md:grid-cols-2">
+          {featuredExpertise.map((item) => (
+            <div key={item} className="orbital-chip">
+              <span className="orbital-chip-dot" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="hairline my-6" />
+
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan/80">
-          {profile.outcomesTitle}
+          Outcome record
         </p>
-        <ul className="mt-3 space-y-1.5">
-          {profile.outcomes.map((item) => (
-            <li key={item.slice(0, 32)} className="flex gap-2.5 text-xs leading-relaxed text-dim">
-              <span className="mt-0.5 shrink-0 text-cyan">▸</span>
-              {item}
-            </li>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {featuredOutcomes.map((item) => (
+            <div key={item} className="metric-panel">
+              <p className="text-sm leading-relaxed text-star/88">{item}</p>
+            </div>
           ))}
-        </ul>
+        </div>
 
         <div className="hairline my-6" />
 
-        {/* Architecture principles */}
-        <ul className="space-y-4">
-          {profile.principles.map((p) => (
-            <li key={p.title}>
+        <ul className="grid gap-5 md:grid-cols-2">
+          {featuredPrinciples.map((principle) => (
+            <li
+              key={principle.title}
+              className="rounded-sm border border-white/8 bg-white/[0.02] p-4"
+            >
               <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan/90">
-                ▸ {p.title}
+                {principle.title}
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-dim">{p.detail}</p>
+              <p className="mt-1 text-sm leading-relaxed text-dim">
+                {principle.detail}
+              </p>
             </li>
           ))}
         </ul>
@@ -75,7 +77,7 @@ export default function About() {
         <div className="hairline my-6" />
 
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-dim">
-          {profile.role} · {profile.location} · {profile.coordinates}
+          {profile.role} / {profile.location} / {profile.coordinates}
         </p>
       </div>
     </SectionShell>

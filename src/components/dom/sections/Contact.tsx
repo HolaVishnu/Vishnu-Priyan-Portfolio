@@ -9,17 +9,11 @@ import { sound } from "../../../lib/sound";
 import profile from "../../../data/profile.json";
 
 const SENDING_LINES = [
-  "ALIGNING DISH → LAST MOON",
+  "ALIGNING DISH TO LAST MOON",
   "ENCODING SIGNAL",
-  "TRANSMITTING ···",
+  "TRANSMITTING",
 ];
 
-// The site ships as a static export (GitHub Pages) — there is no server to
-// receive POSTs. Web3Forms relays submissions straight to the inbox without
-// a backend. The access key is public by design and safe to commit: grab one
-// free at https://web3forms.com (email → instant key) and paste it here.
-// Until a key is set, the form falls back to opening a pre-filled mail
-// compose so no transmission is ever silently lost.
 const WEB3FORMS_KEY = "e4270272-2e05-41af-9aeb-ec1c4105f2c7";
 const RELAY_CONFIGURED = !WEB3FORMS_KEY.startsWith("YOUR_");
 
@@ -32,16 +26,22 @@ export default function Contact() {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !message.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("All three fields are needed to route the signal — including a valid return address.");
+    if (
+      !name.trim() ||
+      !message.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
+      setError(
+        "All three fields are needed to route the signal, including a valid return address.",
+      );
       sound.blip();
       return;
     }
+
     setError(null);
     useUniverse.getState().setTransmission("sending");
     sound.confirm();
 
-    // Fire the payload while the beam animation plays
     if (RELAY_CONFIGURED) {
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -55,12 +55,13 @@ export default function Contact() {
           from_name: "The Architect's Universe",
         }),
       }).catch(() => {
-        /* the mailto link below always remains available */
+        // mailto remains available as a fallback route
       });
     } else {
-      // No relay key yet — open a pre-filled compose so the signal still lands
-      const subject = encodeURIComponent(`Signal from ${name} — Architect's Universe`);
-      const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
+      const subject = encodeURIComponent(
+        `Signal from ${name} - Architect's Universe`,
+      );
+      const body = encodeURIComponent(`${message}\n\n- ${name}\n${email}`);
       window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
     }
 
@@ -86,9 +87,10 @@ export default function Contact() {
       id="contact"
       designation="Moon // Relay station"
       title="Send a signal."
+      subtitle="A direct channel for platform architecture work, advisory conversations, and future-facing systems."
       side="right"
     >
-      <div className="holo-panel holo-corners p-6 md:p-8">
+      <div className="section-surface section-scroll-area p-6 md:p-8" data-lenis-prevent>
         <AnimatePresence mode="wait">
           {transmission === "idle" && (
             <motion.form
@@ -104,6 +106,21 @@ export default function Contact() {
                 platform questions, or just a hello from another orbit — all
                 frequencies welcome.
               </p>
+
+              <div className="mb-6 flex flex-wrap gap-2">
+                <span className="orbital-chip">
+                  <span className="orbital-chip-dot" />
+                  <span>Architecture</span>
+                </span>
+                <span className="orbital-chip">
+                  <span className="orbital-chip-dot" />
+                  <span>ServiceNow</span>
+                </span>
+                <span className="orbital-chip">
+                  <span className="orbital-chip-dot" />
+                  <span>Flexera / ITAM</span>
+                </span>
+              </div>
 
               <label className="block">
                 <span className="eyebrow">Ident</span>
@@ -200,7 +217,7 @@ export default function Contact() {
               </p>
               <p className="mt-3 text-sm text-dim">
                 Your signal is on its way across the void. Expect a response
-                within one orbit — 48 Earth hours.
+                within one orbit - 48 Earth hours.
               </p>
               <button
                 type="button"

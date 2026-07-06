@@ -13,7 +13,7 @@ export default function Skills() {
       title="A constellation of disciplines."
       subtitle="Platform architecture, ITAM operations, cloud systems, and observability stitched into one operating model."
     >
-      <div className="section-surface max-h-[58vh] overflow-y-auto p-6 md:p-8" data-lenis-prevent>
+      <div className="section-surface section-scroll-area p-6 md:p-8" data-lenis-prevent>
         <p className="text-sm leading-relaxed text-dim">
           Every discipline is a star. Hover them to trace the constellations —
           the ServiceNow platform feeds the data model, the ITAM estate
@@ -38,7 +38,7 @@ export default function Skills() {
 
         <div className="hairline my-5" />
 
-        <ul className="grid grid-cols-2 gap-2">
+        <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
           {skillsData.skills.map((skill) => (
             <li
               key={skill.id}

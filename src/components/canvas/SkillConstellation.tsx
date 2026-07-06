@@ -58,6 +58,14 @@ const CHART: Record<string, [number, number, number]> = {
 // view axis so no star hides behind the left-side section panel.
 const CHART_SHIFT = new THREE.Vector3(8, 0, 0);
 
+// Burst timing: 23 stars stagger their peaks across 75% of the total
+// burst-progress range; each star's local rise+fall occupies 40% of
+// bp-space. Total real-time duration is controlled by BURST_DURATION_S.
+const STAR_COUNT = 23;
+const STAGGER_SPAN = 0.75;
+const STAR_BP_WINDOW = 0.4;
+const BURST_DURATION_S = 2.2;
+
 function Star({
   skill,
   position,
@@ -65,6 +73,8 @@ function Star({
   hovered,
   labelVisible,
   onHover,
+  burstRef,
+  starIndex,
 }: {
   skill: Skill;
   position: THREE.Vector3;
@@ -72,6 +82,8 @@ function Star({
   hovered: boolean;
   labelVisible: boolean;
   onHover: (id: string | null) => void;
+  burstRef: React.MutableRefObject<number>;
+  starIndex: number;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const size = 0.17 + skill.magnitude * 0.18;
@@ -79,8 +91,28 @@ function Star({
   useFrame((state, delta) => {
     const mesh = meshRef.current;
     if (!mesh) return;
-    const target = hovered ? 1.9 : 1;
-    const s = THREE.MathUtils.damp(mesh.scale.x, target, 8, delta);
+
+    // Staggered burst: star i's local progress starts at a fraction of bp
+    const bp = burstRef.current;
+    const startBp = (starIndex / STAR_COUNT) * STAGGER_SPAN;
+    const localT = Math.max(0, Math.min((bp - startBp) / STAR_BP_WINDOW, 1));
+
+    // Quick rise to 2.8x, slow fall back to 1 — like a nova flare
+    let burstScale = 1;
+    if (localT > 0) {
+      if (localT < 0.22) {
+        burstScale = 1 + (localT / 0.22) * 1.8; // 1 → 2.8
+      } else {
+        burstScale = 2.8 - ((localT - 0.22) / 0.78) * 1.8; // 2.8 → 1
+      }
+    }
+
+    const hoverTarget = hovered ? 1.9 : 1;
+    const finalTarget = Math.max(hoverTarget, burstScale);
+
+    // Faster damp on the rise for a snappy pop feel
+    const dampSpeed = localT > 0 && localT < 0.22 ? 16 : 8;
+    const s = THREE.MathUtils.damp(mesh.scale.x, finalTarget, dampSpeed, delta);
     mesh.scale.setScalar(s);
     mesh.position.y =
       position.y + Math.sin(state.clock.elapsedTime * 0.7 + position.x) * 0.15;
@@ -102,33 +134,33 @@ function Star({
         <meshBasicMaterial color={color} toneMapped={false} />
       </mesh>
       {labelVisible && (
-      <Html
-        position={[position.x, position.y + size + 0.5, position.z]}
-        center
-        distanceFactor={16}
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          className={`whitespace-nowrap text-center font-mono transition-all duration-300 ${
-            hovered ? "opacity-100" : "opacity-90"
-          }`}
+        <Html
+          position={[position.x, position.y + size + 0.5, position.z]}
+          center
+          distanceFactor={16}
+          style={{ pointerEvents: "none" }}
         >
-          <span
-            className="text-xs font-medium tracking-[0.25em] uppercase"
-            style={{
-              color: hovered ? color : "#dfe5fa",
-              textShadow: "0 0 10px rgba(5,6,15,0.9), 0 0 3px rgba(5,6,15,1)",
-            }}
+          <div
+            className={`whitespace-nowrap text-center font-mono transition-all duration-300 ${
+              hovered ? "opacity-100" : "opacity-90"
+            }`}
           >
-            {skill.name}
-          </span>
-          {hovered && (
-            <div className="mt-1 max-w-[200px] whitespace-normal rounded border border-cyan-400/20 bg-[#070918]/90 px-2.5 py-1.5 text-[10px] normal-case tracking-normal text-[#c9d2f0]">
-              {skill.note}
-            </div>
-          )}
-        </div>
-      </Html>
+            <span
+              className="text-xs font-medium tracking-[0.25em] uppercase"
+              style={{
+                color: hovered ? color : "#dfe5fa",
+                textShadow: "0 0 10px rgba(5,6,15,0.9), 0 0 3px rgba(5,6,15,1)",
+              }}
+            >
+              {skill.name}
+            </span>
+            {hovered && (
+              <div className="mt-1 max-w-[200px] whitespace-normal rounded border border-cyan-400/20 bg-[#070918]/90 px-2.5 py-1.5 text-[10px] normal-case tracking-normal text-[#c9d2f0]">
+                {skill.note}
+              </div>
+            )}
+          </div>
+        </Html>
       )}
     </group>
   );
@@ -136,9 +168,35 @@ function Star({
 
 export default function SkillConstellation() {
   const [hovered, setHovered] = useState<string | null>(null);
-  // Labels only render near the constellation stop — elsewhere they'd
-  // bleed through other scenes as faint floating text.
+  const [lineBright, setLineBright] = useState(false);
   const labelsVisible = useUniverse((s) => s.activeSection === "skills");
+
+  // Burst state — all refs to avoid triggering React reconciliation on every frame
+  const burstRef = useRef(0);
+  const burstActiveRef = useRef(false);
+  const hasFlashedRef = useRef(false);
+
+  // Mirror labelsVisible into a ref so useFrame always sees the latest value
+  const labelsVisibleRef = useRef(false);
+  labelsVisibleRef.current = labelsVisible;
+
+  useFrame((_, delta) => {
+    // Detect first arrival at skills section
+    if (labelsVisibleRef.current && !hasFlashedRef.current) {
+      hasFlashedRef.current = true;
+      burstRef.current = 0;
+      burstActiveRef.current = true;
+      // Lines flash bright then settle — driven by React state (one re-render each)
+      setLineBright(true);
+      setTimeout(() => setLineBright(false), 1500);
+    }
+
+    // Advance burst progress (0 → 1 over BURST_DURATION_S seconds)
+    if (burstActiveRef.current) {
+      burstRef.current = Math.min(burstRef.current + delta / BURST_DURATION_S, 1);
+      if (burstRef.current >= 1) burstActiveRef.current = false;
+    }
+  });
 
   const { positions, colors } = useMemo(() => {
     const center = new THREE.Vector3(...WORLD.skillsCenter);
@@ -159,12 +217,14 @@ export default function SkillConstellation() {
     return { positions, colors };
   }, []);
 
+  const skills = skillsData.skills as Skill[];
+
   return (
     // Stars and lines are always in the scene — they're the landmark you fly
     // toward, so hiding them until arrival made the approach look blacked out.
     // Only the HTML labels wait for the skills section (labelsVisible).
     <group>
-      {(skillsData.skills as Skill[]).map((skill) => (
+      {skills.map((skill, i) => (
         <Star
           key={skill.id}
           skill={skill}
@@ -173,6 +233,8 @@ export default function SkillConstellation() {
           hovered={hovered === skill.id}
           labelVisible={labelsVisible}
           onHover={setHovered}
+          burstRef={burstRef}
+          starIndex={i}
         />
       ))}
 
@@ -182,10 +244,10 @@ export default function SkillConstellation() {
           <Line
             key={`${a}-${b}`}
             points={[positions.get(a)!, positions.get(b)!]}
-            color={lit ? "#4ff2ff" : "#9b82ff"}
-            lineWidth={lit ? 1.8 : 1.1}
+            color={lit || lineBright ? "#4ff2ff" : "#9b82ff"}
+            lineWidth={lit || lineBright ? 2.4 : 1.1}
             transparent
-            opacity={lit ? 0.9 : 0.38}
+            opacity={lit ? 0.9 : lineBright ? 0.88 : 0.38}
           />
         );
       })}

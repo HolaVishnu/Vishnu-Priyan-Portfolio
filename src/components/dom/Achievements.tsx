@@ -19,7 +19,7 @@ export default function Achievements() {
   const def = lastUnlock ? ACHIEVEMENTS[lastUnlock.id] : null;
 
   return (
-    <div className="pointer-events-none fixed bottom-8 left-1/2 z-[70] -translate-x-1/2">
+    <div className="pointer-events-none fixed left-1/2 top-18 z-[70] -translate-x-1/2 md:top-22">
       <AnimatePresence>
         {visible && def && (
           <motion.div
@@ -29,7 +29,7 @@ export default function Achievements() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             role="status"
-            className="holo-panel holo-corners px-5 py-3 text-center"
+            className="holo-panel holo-corners max-w-[24rem] px-5 py-3 text-center"
           >
             <p className="eyebrow">Achievement // {def.name}</p>
             <p className="mt-1 font-mono text-xs text-star/80">{def.detail}</p>

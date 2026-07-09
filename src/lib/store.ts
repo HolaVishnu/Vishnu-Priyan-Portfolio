@@ -29,6 +29,8 @@ interface UniverseState {
   lastUnlock: AchievementUnlock | null;
   /** "Title · Artist · NCS" while a soundtrack track plays, else null */
   nowPlaying: string | null;
+  hoveredSkill: string | null;
+  visitedSections: string[];
 
   setPhase: (phase: Phase) => void;
   setProgress: (progress: number, velocity: number) => void;
@@ -43,6 +45,7 @@ interface UniverseState {
   setQuality: (q: Quality) => void;
   setReducedMotion: (r: boolean) => void;
   setNowPlaying: (t: string | null) => void;
+  setHoveredSkill: (id: string | null) => void;
   unlock: (id: string) => void;
 }
 
@@ -62,10 +65,24 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   unlocked: [],
   lastUnlock: null,
   nowPlaying: null,
+  hoveredSkill: null,
+  visitedSections: [],
 
   setPhase: (phase) => set({ phase }),
   setProgress: (progress, velocity) => set({ progress, velocity }),
-  setActiveSection: (activeSection) => set({ activeSection }),
+  setActiveSection: (activeSection) => {
+    set({ activeSection });
+    if (!activeSection) return;
+    const { visitedSections, unlocked } = get();
+    if (!visitedSections.includes(activeSection)) {
+      const next = [...visitedSections, activeSection];
+      set({ visitedSections: next });
+      const ALL_SECTIONS = ["about", "skills", "projects", "timeline", "resume", "contact"];
+      if (!unlocked.includes("explorer") && ALL_SECTIONS.every((s) => next.includes(s))) {
+        get().unlock("explorer");
+      }
+    }
+  },
   startProjectDock: (id) => {
     const { projectFlightPhase } = get();
     if (projectFlightPhase !== "idle") return;
@@ -79,6 +96,7 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   finishProjectDock: () => {
     if (get().projectFlightPhase !== "docking") return;
     set({ projectFlightPhase: "docked", velocity: 0 });
+    get().unlock("docked_first");
   },
   startProjectUndock: () => {
     const { projectFlightPhase, projectFlightProject } = get();
@@ -111,6 +129,7 @@ export const useUniverse = create<UniverseState>((set, get) => ({
   setQuality: (quality) => set({ quality }),
   setReducedMotion: (reducedMotion) => set({ reducedMotion }),
   setNowPlaying: (nowPlaying) => set({ nowPlaying }),
+  setHoveredSkill: (hoveredSkill) => set({ hoveredSkill }),
   unlock: (id) => {
     const { unlocked } = get();
     if (unlocked.includes(id)) return;

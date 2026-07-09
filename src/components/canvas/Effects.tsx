@@ -1,15 +1,31 @@
-// EffectComposer is intentionally absent.
-//
-// The composer renders the scene to an internal render target, then blits to
-// the main canvas framebuffer. Chrome's GPU compositor can sample the canvas
-// BETWEEN the clear and the blit — producing a strip of the raw clear colour
-// (#05060f) at the top, left, or right of the viewport during slow scroll.
-// preserveDrawingBuffer does not help because the canvas IS cleared before the
-// blit. The only reliable fix is to eliminate the intermediate buffer entirely
-// and let Three.js write directly to the canvas each frame.
-//
-// Visual compensation lives in CSS (globals.css .scene-vignette overlay).
+"use client";
+
+import {
+  EffectComposer,
+  Bloom,
+  Vignette,
+} from "@react-three/postprocessing";
+import { BlendFunction, KernelSize } from "postprocessing";
+import { useUniverse } from "../../lib/store";
 
 export default function Effects() {
-  return null;
+  const quality = useUniverse((s) => s.quality);
+
+  return (
+    <EffectComposer enableNormalPass={false} multisampling={0}>
+      <Bloom
+        intensity={1.1}
+        luminanceThreshold={0.52}
+        luminanceSmoothing={0.88}
+        kernelSize={quality === "high" ? KernelSize.LARGE : KernelSize.MEDIUM}
+        blendFunction={BlendFunction.ADD}
+        mipmapBlur
+      />
+      <Vignette
+        offset={0.36}
+        darkness={0.68}
+        blendFunction={BlendFunction.NORMAL}
+      />
+    </EffectComposer>
+  );
 }

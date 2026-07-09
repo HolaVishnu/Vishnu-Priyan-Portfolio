@@ -19,6 +19,7 @@
         { "metric": "10+", "label": "engineers mentored per account" }
       ],
       "lessons": "Asset management succeeds on cadence, not heroics. The one-off cleanups mattered less than the weekly reclamation rhythm — and a written playbook meant every new account started at maturity, not at zero.",
+      "mission_readout": "Governance at scale requires a practice, not a project — this engagement established the Flexera architecture as the repeatable standard across accounts, making each new deployment faster and more defensible than the last.",
       "diagram": "/diagrams/vault.svg"
     },
     {
@@ -40,6 +41,7 @@
         { "metric": "SaaS", "label": "spend visibility via SaaS Manager" }
       ],
       "lessons": "A platform migration is a governance project wearing an infrastructure costume. Moving FNMS was the easy half — rebuilding the license operating model for cloud consumption was where the savings actually came from.",
+      "mission_readout": "Migrating a bank's license intelligence to the cloud was as much a risk project as an infrastructure one — the operating model rebuild that followed the platform move is where the long-term savings were captured.",
       "diagram": "/diagrams/meridian.svg"
     },
     {
@@ -61,6 +63,7 @@
         { "metric": "AUTO", "label": "CI population via Discovery" }
       ],
       "lessons": "Data ownership is a political problem wearing a technical costume. The reconciliation rules take weeks; agreeing who owns server records takes months. Start the ownership conversations on day one.",
+      "mission_readout": "A trusted CMDB is the nervous system of a well-run enterprise — this programme turned ad-hoc data hygiene into a continuous governance discipline, making every downstream process from change management to cost optimisation more reliable.",
       "diagram": "/diagrams/atlas.svg"
     },
     {
@@ -82,6 +85,7 @@
         { "metric": "0", "label": "audit findings against the position" }
       ],
       "lessons": "In licensing, speed is literally money: every unmeasured week of sub-capacity eligibility is list-price exposure. Rapid deployment beat elegant deployment, and the governance came right behind it.",
+      "mission_readout": "Speed was the product: every week of sub-capacity eligibility undocumented was a week of full-capacity exposure. Rapid deployment converted an inbound audit from a liability into a controlled engagement.",
       "diagram": "/diagrams/ledger.svg"
     },
     {
@@ -103,6 +107,7 @@
         { "metric": "2→1", "label": "management planes, one policy" }
       ],
       "lessons": "Two endpoint tools means two opinions unless the policy layer is the single source of truth. We stopped arguing about agent counts the day compliance was defined once, above both tools.",
+      "mission_readout": "Dual management planes are a configuration risk in disguise — the solution was to define compliance once above both tools, eliminating the drift that comes from two systems with two opinions about the same endpoint.",
       "diagram": "/diagrams/aegis.svg"
     },
     {
@@ -124,6 +129,7 @@
         { "metric": "~30%", "label": "fewer repeat incidents via RCA/PIR" }
       ],
       "lessons": "Observability without CMDB context is just noise with better graphs. The telemetry only became actionable when every alert could answer 'which service, whose change, what impact' — that context lives in the configuration model.",
+      "mission_readout": "Telemetry without topology is just noise at scale — the observability programme became actionable the moment every alert could answer 'which service, whose change, what impact', a question that could only be answered from the CMDB.",
       "diagram": "/diagrams/sentinel.svg"
     }
   ]

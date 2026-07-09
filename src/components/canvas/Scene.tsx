@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { Preload, Sparkles } from "@react-three/drei";
 import { useUniverse } from "../../lib/store";
 import { WORLD } from "../../lib/journey";
+import { AdaptiveDpr } from "@react-three/drei";
 import CameraRig from "./CameraRig";
 import Effects from "./Effects";
 import Galaxy from "./Galaxy";
@@ -24,18 +25,9 @@ export default function Scene() {
 
   return (
     <div className="fixed inset-0" aria-hidden="true">
-      {/* CSS vignette — replaces the postprocessing Vignette pass which was
-          removed to eliminate the EffectComposer blit/blank race on Chrome. */}
-      <div
-        className="pointer-events-none absolute inset-0 z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 55%, rgba(5,6,15,0.55) 78%, rgba(5,6,15,0.88) 100%)",
-        }}
-      />
       <Canvas
         camera={{ fov: 42, near: 0.1, far: 900, position: [0, 1, 96] }}
-        dpr={[1, 1.25]}
+        dpr={[1, 2]}
         gl={{
           antialias: false,
           // preserveDrawingBuffer prevents Chrome/ANGLE from blanking the
@@ -117,8 +109,7 @@ export default function Scene() {
           <Preload all />
         </Suspense>
 
-        {/* AdaptiveDpr deliberately absent: dynamic buffer resizes mid-scroll
-            caused black frames with the EffectComposer on some GPUs. */}
+        <AdaptiveDpr pixelated />
         <CameraRig />
       </Canvas>
     </div>

@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import { Preload, Sparkles } from "@react-three/drei";
 import { useUniverse } from "../../lib/store";
 import { WORLD } from "../../lib/journey";
-import { AdaptiveDpr } from "@react-three/drei";
 import CameraRig from "./CameraRig";
 import Effects from "./Effects";
 import Galaxy from "./Galaxy";
@@ -109,7 +108,6 @@ export default function Scene() {
           <Preload all />
         </Suspense>
 
-        <AdaptiveDpr pixelated />
         <CameraRig />
       </Canvas>
     </div>

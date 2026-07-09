@@ -196,13 +196,19 @@ export default function Landing() {
               <video
                 ref={introVideoRef}
                 className="absolute inset-0 h-full w-full object-cover"
-                style={{ filter: "brightness(1.6) saturate(1.15) contrast(1.05)" }}
+                style={{ willChange: "transform", transform: "translateZ(0)" }}
                 src={INTRO_VIDEO_SRC}
                 autoPlay
                 playsInline
                 preload="auto"
                 onEnded={() => setShowIntro(false)}
                 onError={() => setShowIntro(false)}
+              />
+              {/* Brightness lift via blend instead of CSS filter (filter on <video> disables GPU hardware decode) */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{ background: "rgba(40,50,90,0.18)", mixBlendMode: "screen" }}
               />
 
               {/* Thin bars only — enough to read text, no side darkening */}

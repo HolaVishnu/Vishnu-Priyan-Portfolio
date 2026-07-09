@@ -25,4 +25,19 @@ export const ACHIEVEMENTS: Record<string, AchievementDef> = {
     name: "Signal Sent",
     detail: "Transmission received at the Last Moon",
   },
+  explorer: {
+    id: "explorer",
+    name: "Explorer",
+    detail: "All six mission worlds visited",
+  },
+  docked_first: {
+    id: "docked_first",
+    name: "First Contact",
+    detail: "Docked with a mission station for the first time",
+  },
+  cartographer: {
+    id: "cartographer",
+    name: "Cartographer",
+    detail: "Every star in the skill constellation uncovered",
+  },
 };

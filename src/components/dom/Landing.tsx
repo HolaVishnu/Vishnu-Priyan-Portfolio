@@ -465,7 +465,7 @@ export default function Landing() {
                     {audioOn ? "Disable sound" : "Enable sound"}
                   </button>
 
-                  {autoSecs > 0 && autoSecs <= 4 && (
+                  {autoSecs > 0 && autoSecs <= 5 && (
                     <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-dim/35 transition-opacity duration-700">
                       Auto-launching in {autoSecs}s
                     </p>

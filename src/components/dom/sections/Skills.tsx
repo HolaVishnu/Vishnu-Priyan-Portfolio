@@ -1,10 +1,12 @@
 "use client";
 
+import { useUniverse } from "../../../lib/store";
 import SectionShell from "../SectionShell";
 import skillsData from "../../../data/skills.json";
 
 export default function Skills() {
   const groupColor = new Map(skillsData.groups.map((g) => [g.id, g.color]));
+  const hoveredSkill = useUniverse((s) => s.hoveredSkill);
 
   return (
     <SectionShell
@@ -39,15 +41,24 @@ export default function Skills() {
         <div className="hairline my-5" />
 
         <ul className="grid grid-cols-2 gap-2 xl:grid-cols-3">
-          {skillsData.skills.map((skill) => (
-            <li
-              key={skill.id}
-              className="rounded-sm border border-white/6 bg-white/[0.03] px-3 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-star/80"
-              style={{ borderColor: groupColor.get(skill.group) ?? "#4ff2ff" }}
-            >
-              {skill.name}
-            </li>
-          ))}
+          {skillsData.skills.map((skill) => {
+            const isHovered = hoveredSkill === skill.id;
+            const color = groupColor.get(skill.group) ?? "#4ff2ff";
+            return (
+              <li
+                key={skill.id}
+                className="rounded-sm border px-3 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-200"
+                style={{
+                  borderColor: color,
+                  background: isHovered ? `${color}18` : "rgba(255,255,255,0.03)",
+                  color: isHovered ? color : "rgba(223,229,250,0.80)",
+                  boxShadow: isHovered ? `0 0 12px ${color}40` : "none",
+                }}
+              >
+                {skill.name}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </SectionShell>

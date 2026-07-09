@@ -167,7 +167,20 @@ function Star({
 }
 
 export default function SkillConstellation() {
-  const [hovered, setHovered] = useState<string | null>(null);
+  const [hovered, setHoveredLocal] = useState<string | null>(null);
+  const seenSkillsRef = useRef(new Set<string>());
+
+  const setHovered = (id: string | null) => {
+    setHoveredLocal(id);
+    useUniverse.getState().setHoveredSkill(id);
+    if (id) {
+      seenSkillsRef.current.add(id);
+      const allIds = (skillsData.skills as Skill[]).map((s) => s.id);
+      if (allIds.every((sid) => seenSkillsRef.current.has(sid))) {
+        useUniverse.getState().unlock("cartographer");
+      }
+    }
+  };
   const [lineBright, setLineBright] = useState(false);
   const labelsVisible = useUniverse((s) => s.activeSection === "skills");
 

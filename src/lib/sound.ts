@@ -184,6 +184,27 @@ class SoundEngine {
       this.confirmTailTimer = null;
     }, 110);
   }
+
+  dock() {
+    this.ensureContext();
+    this.stopUiTones();
+    this.tone(80, 160, 0.06, 0.35);
+  }
+
+  achieve() {
+    this.ensureContext();
+    this.stopUiTones();
+    this.tone(440, 880, 0.05, 0.22);
+    window.setTimeout(() => {
+      this.tone(660, 1320, 0.04, 0.3);
+    }, 140);
+  }
+
+  transmit() {
+    this.ensureContext();
+    this.stopUiTones();
+    this.tone(220, 880, 0.045, 0.6);
+  }
 }
 
 // ── Per-section ambient layer ────────────────────────────────────────────────

@@ -170,14 +170,12 @@ export default function ProjectDossier() {
                     </div>
                   </section>
 
-                  <section className="mt-5 dossier-value-panel">
-                    <p className="eyebrow mb-3">Mission readout</p>
-                    <p className="dossier-value-copy">
-                      Platform governance, business architecture, and technical
-                      delivery aligned into one operating system instead of a
-                      collection of disconnected implementation tasks.
-                    </p>
-                  </section>
+                  {"mission_readout" in project && project.mission_readout && (
+                    <section className="mt-5 dossier-value-panel">
+                      <p className="eyebrow mb-3">Mission readout</p>
+                      <p className="dossier-value-copy">{project.mission_readout}</p>
+                    </section>
+                  )}
                 </div>
               </div>
             </div>

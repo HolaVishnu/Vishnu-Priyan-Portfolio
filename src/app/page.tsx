@@ -10,7 +10,16 @@ const personSchema = {
   "@type": "Person",
   "@id": `${siteUrl}/#person`,
   name: profile.fullName,
-  alternateName: profile.name,
+  // Cover every spelling people actually search — Google treats each
+  // variant as a distinct query term.
+  alternateName: [
+    profile.name,
+    "Vishnu Priyan",
+    "Vishnu Priyaan",
+    "Vishnupriyan",
+    "Vishnu Priyan Chellappa",
+    "Vishnu Priyaan Chellappa",
+  ],
   url: siteUrl,
   image: `${siteUrl}/opengraph-image`,
   jobTitle: profile.role,
@@ -52,7 +61,8 @@ export default function Home() {
       <section className="sr-only" aria-label="Website overview">
         <h1>{profile.headline}</h1>
         <p>
-          {profile.fullName} is an {profile.role} specializing in ServiceNow,
+          {profile.fullName} (also written Vishnu Priyan, Vishnupriyan, or
+          Vishnu Priyaan) is an {profile.role} specializing in ServiceNow,
           Flexera, IT asset management, cloud architecture, observability, and
           enterprise automation.
         </p>

@@ -196,7 +196,6 @@ export default function Landing() {
               <video
                 ref={introVideoRef}
                 className="absolute inset-0 h-full w-full object-cover"
-                style={{ filter: "brightness(1.6) saturate(1.15) contrast(1.05)" }}
                 src={INTRO_VIDEO_SRC}
                 autoPlay
                 playsInline

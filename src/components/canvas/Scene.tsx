@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import { Preload, Sparkles } from "@react-three/drei";
 import { useUniverse } from "../../lib/store";
 import { WORLD } from "../../lib/journey";
-import { AdaptiveDpr } from "@react-three/drei";
 import CameraRig from "./CameraRig";
 import Effects from "./Effects";
 import Galaxy from "./Galaxy";
@@ -22,12 +21,26 @@ import WarpStreaks from "./WarpStreaks";
 
 export default function Scene() {
   const quality = useUniverse((s) => s.quality);
+  const phase = useUniverse((s) => s.phase);
 
   return (
     <div className="fixed inset-0" aria-hidden="true">
+      {/* CSS vignette — replaces the EffectComposer Vignette which causes
+          blank frames when it resizes render targets during scroll. */}
+      <div
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 55%, rgba(5,6,15,0.55) 78%, rgba(5,6,15,0.88) 100%)",
+        }}
+      />
       <Canvas
         camera={{ fov: 42, near: 0.1, far: 900, position: [0, 1, 96] }}
         dpr={[1, 2]}
+        // Pause rendering while the intro video plays — canvas is hidden
+        // behind the video anyway, so rendering is pure GPU waste that
+        // competes with video decode and causes mouse lag.
+        frameloop={phase === "boot" ? "demand" : "always"}
         gl={{
           antialias: false,
           // preserveDrawingBuffer prevents Chrome/ANGLE from blanking the
@@ -109,7 +122,6 @@ export default function Scene() {
           <Preload all />
         </Suspense>
 
-        <AdaptiveDpr pixelated />
         <CameraRig />
       </Canvas>
     </div>

@@ -45,8 +45,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vishnu-priyan-portfolio.vercel.app"),
   title: "Vishnu Priyaan — The Architect's Universe",
   description:
-    "Infrastructure & ITSM Solutions Architect. 15+ years of ServiceNow and Flexera platform transformations — ITSM, ITOM, CMDB, CSDM, SAM, HAM — told as an interactive journey through space.",
+    "Vishnu Priyan (Vishnu Priyaan Chellappa) — Infrastructure & ITSM Solutions Architect. 15+ years of ServiceNow and Flexera platform transformations — ITSM, ITOM, CMDB, CSDM, SAM, HAM — told as an interactive journey through space.",
   keywords: [
+    "Vishnu Priyan",
+    "Vishnu Priyaan",
+    "Vishnupriyan",
+    "Vishnu Priyan Chellappa",
+    "Vishnu Priyaan Chellappa",
+    "Vishnu Priyan portfolio",
+    "Vishnu Priyan architect",
     "Infrastructure Architect",
     "ITSM Solutions Architect",
     "ServiceNow",

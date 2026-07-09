@@ -1,31 +1,8 @@
 "use client";
 
-import {
-  EffectComposer,
-  Bloom,
-  Vignette,
-} from "@react-three/postprocessing";
-import { BlendFunction, KernelSize } from "postprocessing";
-import { useUniverse } from "../../lib/store";
-
+// EffectComposer removed — it resizes WebGL render targets during scroll
+// which causes blank/black frames. Vignette is handled via CSS radial-gradient
+// in Scene.tsx; Bloom is not worth the compositor blit race it introduces.
 export default function Effects() {
-  const quality = useUniverse((s) => s.quality);
-
-  return (
-    <EffectComposer enableNormalPass={false} multisampling={0}>
-      <Bloom
-        intensity={1.1}
-        luminanceThreshold={0.52}
-        luminanceSmoothing={0.88}
-        kernelSize={quality === "high" ? KernelSize.LARGE : KernelSize.MEDIUM}
-        blendFunction={BlendFunction.ADD}
-        mipmapBlur
-      />
-      <Vignette
-        offset={0.36}
-        darkness={0.68}
-        blendFunction={BlendFunction.NORMAL}
-      />
-    </EffectComposer>
-  );
+  return null;
 }

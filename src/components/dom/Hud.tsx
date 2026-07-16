@@ -10,6 +10,15 @@ import profile from "../../data/profile.json";
 
 const NOMINATE_HREF = "/nominate.html";
 
+const STOP_SHORT: Record<string, string> = {
+  about: "ORIG",
+  skills: "STAR",
+  projects: "FORGE",
+  timeline: "ORBIT",
+  resume: "MONO",
+  contact: "MOON",
+};
+
 const tmpPos = new THREE.Vector3();
 const tmpTarget = new THREE.Vector3();
 
@@ -97,7 +106,8 @@ export default function Hud() {
         >
           <div className="absolute left-6 top-6 font-mono text-[10px] uppercase tracking-[0.3em] md:left-10 md:top-8">
             <p className="text-star/90">
-              {profile.name} <span className="text-dim">{"// "}{profile.callsign}</span>
+              {profile.name}
+              <span className="hidden md:inline text-dim">{" // "}{profile.callsign}</span>
             </p>
             <p className="mt-1.5 flex items-center gap-2 text-dim">
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
@@ -253,7 +263,7 @@ export default function Hud() {
 
           <nav
             aria-label="Journey stops"
-            className="pointer-events-auto absolute inset-x-0 flex items-center justify-center gap-4 pb-[env(safe-area-inset-bottom,0px)] md:hidden"
+            className="pointer-events-auto absolute inset-x-0 flex items-center justify-around pb-[env(safe-area-inset-bottom,0px)] md:hidden"
             style={{ bottom: "0.5rem" }}
           >
             {STOPS.map((stop) => (
@@ -272,7 +282,7 @@ export default function Hud() {
                   }`}
                 />
                 <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-dim/70">
-                  {stop.name.split(" ")[0]}
+                  {STOP_SHORT[stop.id] ?? stop.name.split(" ")[0]}
                 </span>
               </button>
             ))}

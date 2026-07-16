@@ -47,7 +47,7 @@ const LANDING_BRIEF = [
 const LANDING_METRICS = [
   { label: "Years", value: "15+" },
   { label: "Mission worlds", value: "6" },
-  { label: "Focus", value: "Future systems" },
+  { label: "Focus", value: "Future" },
 ];
 
 export default function Landing() {
@@ -66,6 +66,11 @@ export default function Landing() {
   useEffect(() => {
     if (phase !== "boot") return;
     if (useUniverse.getState().reducedMotion) {
+      setShowIntro(false);
+      return;
+    }
+    // Skip video on mobile — landscape video crops too aggressively in portrait
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
       setShowIntro(false);
       return;
     }
@@ -204,19 +209,23 @@ export default function Landing() {
                 onError={() => setShowIntro(false)}
               />
 
-              {/* Thin bars only — enough to read text, no side darkening */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-black/50 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="landing-scanline absolute inset-x-0 top-[22%] h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent" />
+              {/* Gradient bars — stronger so text always readable over any frame */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-black/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-black/80 to-transparent" />
+              {/* Subtle side vignette */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-[12%] bg-gradient-to-r from-black/40 to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-[12%] bg-gradient-to-l from-black/40 to-transparent" />
+              <div className="landing-scanline absolute inset-x-0 top-[28%] h-px bg-gradient-to-r from-transparent via-cyan/30 to-transparent" />
 
               <div className="absolute left-6 top-7 md:left-10 md:top-9">
                 <p className="font-mono text-[9px] uppercase tracking-[0.34em] text-dim/45">
-                  {profile.name} // The Architect&apos;s Universe
+                  {profile.name}
+                  <span className="hidden md:inline"> // The Architect&apos;s Universe</span>
                 </p>
               </div>
 
-              <div className="absolute bottom-8 left-6 right-6 flex items-end justify-between gap-4 md:bottom-12 md:left-10 md:right-10">
-                <div>
+              <div className="absolute bottom-8 left-6 right-6 flex items-end justify-end gap-4 md:bottom-12 md:justify-between md:left-10 md:right-10">
+                <div className="hidden md:block">
                   <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-cyan/58">
                     Transmission briefing // autoplay intro
                   </p>
@@ -348,7 +357,7 @@ export default function Landing() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.15 }}
-                  className="mb-6 flex items-center gap-4"
+                  className="mb-3 flex items-center gap-4 md:mb-6"
                 >
                   <span className="h-px w-12 bg-cyan/30" />
                   <p className="eyebrow">SOL-3 // Incoming transmission</p>
@@ -358,7 +367,7 @@ export default function Landing() {
                 <h1
                   ref={nameRef}
                   aria-label={profile.name}
-                  className="font-display text-[clamp(3rem,10vw,8rem)] font-bold uppercase leading-none tracking-tight"
+                  className="font-display text-[clamp(2rem,10vw,8rem)] font-bold uppercase leading-none tracking-tight"
                   style={{
                     perspective: "800px",
                     textShadow:
@@ -390,14 +399,14 @@ export default function Landing() {
                     delay: 1.35,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="mt-8 h-px w-48 origin-center bg-gradient-to-r from-transparent via-cyan/50 to-transparent"
+                  className="mt-4 h-px w-48 origin-center bg-gradient-to-r from-transparent via-cyan/50 to-transparent md:mt-8"
                 />
 
                 <motion.p
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 1.48 }}
-                  className="mt-7 max-w-4xl text-[clamp(1.2rem,2vw,1.9rem)] font-light tracking-[0.02em] text-star/88"
+                  className="mt-3 max-w-4xl text-[clamp(1.1rem,2vw,1.9rem)] font-light tracking-[0.02em] text-star/88 md:mt-7"
                   style={{ textShadow: "0 2px 20px rgba(5,6,15,0.9)" }}
                 >
                   Designing enterprise systems for{" "}
@@ -408,7 +417,7 @@ export default function Landing() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 1.72 }}
-                  className="mt-5 max-w-3xl text-sm leading-relaxed text-dim md:text-base"
+                  className="mt-2 max-w-3xl text-sm leading-relaxed text-dim md:mt-5 md:text-base"
                 >
                   A cinematic voyage through platform architecture, cloud
                   governance, AI automation, and operating models designed for
@@ -419,7 +428,7 @@ export default function Landing() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 1.92 }}
-                  className="mt-6 flex flex-wrap items-center justify-center gap-3"
+                  className="mt-3 flex flex-wrap items-center justify-center gap-2 md:mt-6 md:gap-3"
                 >
                   {LANDING_BRIEF.map((item) => (
                     <span key={item} className="landing-chip">
@@ -432,7 +441,7 @@ export default function Landing() {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 2.05 }}
-                  className="mt-8 grid w-full max-w-3xl gap-3 md:grid-cols-3"
+                  className="mt-4 grid w-full max-w-3xl grid-cols-3 gap-2 md:mt-8 md:gap-3"
                 >
                   {LANDING_METRICS.map((metric) => (
                     <div key={metric.label} className="landing-metric">
@@ -446,7 +455,7 @@ export default function Landing() {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 2.3 }}
-                  className="mt-12 flex flex-col items-center gap-5"
+                  className="mt-6 flex flex-col items-center gap-3 md:mt-12 md:gap-5"
                 >
                   <MagneticButton
                     onClick={begin}

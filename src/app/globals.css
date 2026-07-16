@@ -378,11 +378,11 @@ body {
 }
 
 .hud-telemetry {
-  display: block;
+  /* display managed by Tailwind hidden/md:block */
 }
 
 .hud-scroll-hint {
-  display: block;
+  /* display managed by Tailwind hidden/md:block */
 }
 
 .landing-scanline {

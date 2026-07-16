@@ -69,7 +69,7 @@ export default function SectionShell({
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             aria-label={typeof title === "string" ? title : id}
             className="pointer-events-none fixed inset-x-0 bottom-0 z-20 block md:hidden"
-            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+            style={{ paddingBottom: "calc(4.5rem + env(safe-area-inset-bottom, 0px))" }}
           >
             <div
               aria-hidden="true"
@@ -80,7 +80,7 @@ export default function SectionShell({
               }}
             />
             <div
-              className="pointer-events-auto section-shell mx-3 mb-3 max-h-[52vh] overflow-y-auto rounded-[1.1rem] p-5"
+              className="pointer-events-auto section-shell mx-3 mb-3 max-h-[42vh] overflow-x-hidden overflow-y-auto rounded-[1.1rem] p-5"
               data-section={id}
               data-lenis-prevent
             >
